@@ -6,13 +6,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ArrayStackTest {
-    /*public void push(Object value);
-    public Object pop();
-    Object peek();
-    boolean contains(Object value);
-    public int size();
-    boolean isEmpty();
-    void clear();*/
 
     @Test
     public void testPushAndPopWorkCorrectlyAndChangeSize() {
