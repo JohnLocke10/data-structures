@@ -4,14 +4,14 @@ public class ArrayQueue implements Queue {
     private int leftIndex = 0;
     private int rightIndex = 0;
     private int size = 0;
-    Object[] array;
-
-    public ArrayQueue(int capacity) {
-        this.array = new Object[capacity];
-    }
+    private Object[] array;
 
     public ArrayQueue() {
         this.array = new Object[10];
+    }
+
+    public ArrayQueue(int capacity) {
+        this.array = new Object[capacity];
     }
 
     @Override
@@ -26,16 +26,20 @@ public class ArrayQueue implements Queue {
     }
 
     private void ensureCapacityAndExtendArray() {
-        if (rightIndex == array.length) {
+        if (array.length * 0.75 < size || rightIndex == array.length) {
             Object[] extendedArray = new Object[array.length * 2];
-            for (int i = 0; i < size; i++) {
-                extendedArray[i] = array[leftIndex + i];
-            }
-            array = extendedArray;
-            leftIndex = 0;
-            rightIndex = size;
-            updateSize();
+            fillArrayStartingFromZeroIndex(extendedArray);
         }
+    }
+
+    private void fillArrayStartingFromZeroIndex(Object[] extendedArray) {
+        for (int i = 0; i < size; i++) {
+            extendedArray[i] = array[leftIndex + i];
+        }
+        array = extendedArray;
+        leftIndex = 0;
+        rightIndex = size;
+        updateSize();
     }
 
     @Override

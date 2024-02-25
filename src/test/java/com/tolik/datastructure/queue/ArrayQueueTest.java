@@ -19,6 +19,18 @@ public class ArrayQueueTest {
     }
 
     @Test
+    public void checkChangingCapacityForQueueWithManyEmptyBuckets() {
+        ArrayQueue arrayQueue = new ArrayQueue();
+        for (int i = 0; i <= 11; i++) {
+            arrayQueue.enqueue("S");
+            assertEquals("S", arrayQueue.dequeue());
+            assertEquals(0, arrayQueue.size());
+        }
+        arrayQueue.enqueue("B");
+        assertEquals(1, arrayQueue.size());
+    }
+
+    @Test
     public void checkPushAndPeek() {
         ArrayQueue arrayQueue = new ArrayQueue();
         arrayQueue.enqueue("C");
@@ -64,6 +76,7 @@ public class ArrayQueueTest {
         ArrayQueue arrayQueue = new ArrayQueue();
         assertTrue(arrayQueue.isEmpty());
     }
+
     @Test
     public void checkIsEmptyWorksCorrectlyAfterPeekAndDequeue() {
         ArrayQueue arrayQueue = new ArrayQueue();
@@ -96,6 +109,7 @@ public class ArrayQueueTest {
         ArrayQueue arrayQueue = new ArrayQueue();
         assertFalse(arrayQueue.contains("L"));
     }
+
     @Test
     public void checkContainsWorksCorrectlyAfterPeekAndDequeue() {
         ArrayQueue arrayQueue = new ArrayQueue();
@@ -114,7 +128,7 @@ public class ArrayQueueTest {
         arrayQueue.enqueue("R");
         assertEquals(2, arrayQueue.size());
         arrayQueue.clear();
-        assertEquals(0,arrayQueue.size());
+        assertEquals(0, arrayQueue.size());
         assertTrue(arrayQueue.isEmpty());
     }
 }
