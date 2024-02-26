@@ -1,6 +1,7 @@
 package com.tolik.datastructure.list;
 
 import com.tolik.datastructures.List.ArrayList;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ArrayListTest {
 
     @Test
+    @DisplayName("Check add value and remove it from the list")
     public void checkAddValueAndRemoveItFromTheList() {
         ArrayList arrayList = new ArrayList();
         assertEquals(0, arrayList.size());
@@ -25,6 +27,7 @@ public class ArrayListTest {
     }
 
     @Test
+    @DisplayName("Check add values by index and get these values")
     public void checkAddValuesByIndexAndGetTheseValues() {
         ArrayList arrayList = new ArrayList();
         assertEquals(0, arrayList.size());
@@ -37,6 +40,7 @@ public class ArrayListTest {
     }
 
     @Test
+    @DisplayName("Check add value between existing values and get by index")
     public void checkAddValueBetweenExistingValuesAndGetByIndex() {
         ArrayList arrayList = new ArrayList();
         assertEquals(0, arrayList.size());
@@ -51,24 +55,31 @@ public class ArrayListTest {
     }
 
     @Test
+    @DisplayName("Check throw exception when add to index bigger than size")
     public void checkThrowExceptionWhenAddToIndexBiggerThanSize() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("J");
-        assertThrows(IndexOutOfBoundsException.class, () -> {
+        IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
             arrayList.add("K", 2);
         });
+        assertEquals("Index should be a positive number less than array size",
+                actualException.getMessage());
     }
 
     @Test
+    @DisplayName("Check throw exception when add to negative index")
     public void checkThrowExceptionWhenAddToNegativeIndex() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("S");
-        assertThrows(IndexOutOfBoundsException.class, () -> {
+        IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
             arrayList.add("T", -1);
         });
+        assertEquals("Index should be a positive number less than array size",
+                actualException.getMessage());
     }
 
     @Test
+    @DisplayName("Check remove value by positive index in the correct range")
     public void checkRemoveValueByPositiveIndexInTheCorrectRange() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("M");
@@ -82,42 +93,54 @@ public class ArrayListTest {
     }
 
     @Test
+    @DisplayName("Check throw exception when remove value by index bigger than size")
     public void checkThrowExceptionWhenRemoveValueByIndexBiggerThanSize() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("P");
-        assertThrows(IndexOutOfBoundsException.class, () -> {
+        IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
             arrayList.remove(1);
         });
+        assertEquals("Index should be a positive number less than array size",
+                actualException.getMessage());
     }
 
     @Test
     public void checkThrowExceptionWhenRemoveValueByNegativeIndex() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("R");
-        assertThrows(IndexOutOfBoundsException.class, () -> {
+        IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
             arrayList.remove(-2);
         });
+        assertEquals("Index should be a positive number less than array size",
+                actualException.getMessage());
     }
 
     @Test
+    @DisplayName("Check throw exception when remove value by negative index")
     public void checkThrowExceptionGetValueByNegativeIndex() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("U");
-        assertThrows(IndexOutOfBoundsException.class, () -> {
+        IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
             arrayList.get(-2);
         });
+        assertEquals("Index should be a positive number less than array size",
+                actualException.getMessage());
     }
 
     @Test
+    @DisplayName("Check throw exception when get value by index bigger than size")
     public void checkThrowExceptionWhenGetValueByIndexBiggerThanSize() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("Y");
-        assertThrows(IndexOutOfBoundsException.class, () -> {
+        IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
             arrayList.remove(1);
         });
+        assertEquals("Index should be a positive number less than array size",
+                actualException.getMessage());
     }
 
     @Test
+    @DisplayName("Check set to the valid range in array")
     public void checkSetToTheValidRangeInArray() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("E");
@@ -127,24 +150,31 @@ public class ArrayListTest {
     }
 
     @Test
+    @DisplayName("Check throw exception set value by negative index")
     public void checkThrowExceptionSetValueByNegativeIndex() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("A");
-        assertThrows(IndexOutOfBoundsException.class, () -> {
+        IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
             arrayList.set("B", -2);
         });
+        assertEquals("Index should be a positive number less than array size",
+                actualException.getMessage());
     }
 
     @Test
+    @DisplayName("Check throw exception when set value by index bigger than size")
     public void checkThrowExceptionWhenSetValueByIndexBiggerThanSize() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("C");
-        assertThrows(IndexOutOfBoundsException.class, () -> {
+        IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
             arrayList.set("D", 1);
         });
+        assertEquals("Index should be a positive number less than array size",
+                actualException.getMessage());
     }
 
     @Test
+    @DisplayName("Check array is empty when clear after add")
     public void checkArrayIsEmptyWhenClearAfterAdd() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("P");
@@ -156,6 +186,7 @@ public class ArrayListTest {
     }
 
     @Test
+    @DisplayName("Check array is not empty after add value")
     public void checkArrayIsNotEmptyAfterAddValue() {
         ArrayList arrayList = new ArrayList();
         assertTrue(arrayList.isEmpty());
@@ -164,6 +195,7 @@ public class ArrayListTest {
     }
 
     @Test
+    @DisplayName("Check contains returns true after add")
     public void checkContainsReturnTrueAfterAdd() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("G");
@@ -171,6 +203,7 @@ public class ArrayListTest {
     }
 
     @Test
+    @DisplayName("Check contains works correctly with null value")
     public void checkContainsWorksCorrectlyWithNullValue() {
         ArrayList arrayList = new ArrayList();
         arrayList.add(null);
@@ -178,6 +211,7 @@ public class ArrayListTest {
     }
 
     @Test
+    @DisplayName("Check contains after get and remove")
     public void checkContainsAfterGetAndRemove() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("J");
@@ -188,12 +222,14 @@ public class ArrayListTest {
     }
 
     @Test
+    @DisplayName("Check contains returns false on empty array")
     public void checkContainsReturnFalseOnEmptyArray() {
         ArrayList arrayList = new ArrayList();
         assertFalse(arrayList.contains("T"));
     }
 
     @Test
+    @DisplayName("Check contains returns false after clear")
     public void checkContainsReturnFalseAfterClear() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("F");
@@ -202,6 +238,7 @@ public class ArrayListTest {
     }
 
     @Test
+    @DisplayName("Check index of existing value")
     public void checkIndexOfExistingValue() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("A");
@@ -212,6 +249,7 @@ public class ArrayListTest {
     }
 
     @Test
+    @DisplayName("Check last index of existing value")
     public void checkLastIndexOfExistingValue() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("W");
@@ -222,6 +260,7 @@ public class ArrayListTest {
     }
 
     @Test
+    @DisplayName("Check index of for non-existing value")
     public void checkIndexOfForNonExistingValue() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("K");
@@ -229,6 +268,7 @@ public class ArrayListTest {
     }
 
     @Test
+    @DisplayName("Check last index of for non-existing value")
     public void checkLastIndexOfForNonExistingValue() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("C");
@@ -236,6 +276,7 @@ public class ArrayListTest {
     }
 
     @Test
+    @DisplayName("Check index of and last index of for empty array")
     public void checkIndexOfAndLastIndexOfForEmptyArray() {
         ArrayList arrayList = new ArrayList();
         assertEquals(-1, arrayList.indexOf("N"));
@@ -243,6 +284,7 @@ public class ArrayListTest {
     }
 
     @Test
+    @DisplayName("Check add over initial capacity")
     public void checkAddOverInitialCapacity() {
         ArrayList arrayList = new ArrayList(1);
         arrayList.add("X");

@@ -1,7 +1,7 @@
 package com.tolik.datastructure.queue;
 
-import com.tolik.datastructures.List.ArrayList;
 import com.tolik.datastructures.queue.ArrayQueue;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ArrayQueueTest {
 
     @Test
+    @DisplayName("Check enqueue, dequeue, and change size work correctly")
     public void checkEnqueueDequeueAndChangeSizeWorkCorrectly() {
         ArrayQueue arrayQueue = new ArrayQueue();
         arrayQueue.enqueue("A");
@@ -20,6 +21,7 @@ public class ArrayQueueTest {
     }
 
     @Test
+    @DisplayName("Check changing capacity for queue with many empty buckets")
     public void checkChangingCapacityForQueueWithManyEmptyBuckets() {
         ArrayQueue arrayQueue = new ArrayQueue();
         for (int i = 0; i <= 11; i++) {
@@ -32,6 +34,7 @@ public class ArrayQueueTest {
     }
 
     @Test
+    @DisplayName("Check push and peek")
     public void checkPushAndPeek() {
         ArrayQueue arrayQueue = new ArrayQueue();
         arrayQueue.enqueue("C");
@@ -43,7 +46,8 @@ public class ArrayQueueTest {
     }
 
     @Test
-    public void checkEnqueueOverInitialCapacityPeekAndDequeueWorkCorrectly() {
+    @DisplayName("Check enqueue over initial capacity, peek, and dequeue")
+    public void checkEnqueueOverInitialCapacityPeekAndDequeue() {
         ArrayQueue arrayQueue = new ArrayQueue(2);
         arrayQueue.enqueue("E");
         arrayQueue.enqueue("F");
@@ -58,6 +62,7 @@ public class ArrayQueueTest {
     }
 
     @Test
+    @DisplayName("Check enqueue over initial capacity, dequeue, and enqueue again")
     public void checkEnqueueOverInitialCapacityDequeueAndEnqueueAgain() {
         ArrayQueue arrayQueue = new ArrayQueue(1);
         arrayQueue.enqueue("S");
@@ -73,12 +78,14 @@ public class ArrayQueueTest {
     }
 
     @Test
+    @DisplayName("Check isEmpty returns true on empty queue")
     public void checkIsEmptyReturnTrueOnEmptyQueue() {
         ArrayQueue arrayQueue = new ArrayQueue();
         assertTrue(arrayQueue.isEmpty());
     }
 
     @Test
+    @DisplayName("Check isEmpty works correctly after peek and dequeue")
     public void checkIsEmptyWorksCorrectlyAfterPeekAndDequeue() {
         ArrayQueue arrayQueue = new ArrayQueue();
         arrayQueue.enqueue("K");
@@ -90,28 +97,36 @@ public class ArrayQueueTest {
     }
 
     @Test
+    @DisplayName("Check throw IllegalStateException when peek on empty queue")
     public void checkThrowIllegalStateExceptionWhenPeekOnEmptyQueue() {
         ArrayQueue arrayQueue = new ArrayQueue();
-        assertThrows(IllegalStateException.class, () -> {
+        IllegalStateException actualException = assertThrows(IllegalStateException.class, () -> {
             arrayQueue.peek();
         });
+        assertEquals("The Queue is empty!",
+                actualException.getMessage());
     }
 
     @Test
+    @DisplayName("Check throw IllegalStateException when dequeue on empty queue")
     public void checkThrowIllegalStateExceptionWhenDequeueOnEmptyQueue() {
         ArrayQueue arrayQueue = new ArrayQueue();
-        assertThrows(IllegalStateException.class, () -> {
+        IllegalStateException actualException = assertThrows(IllegalStateException.class, () -> {
             arrayQueue.dequeue();
         });
+        assertEquals("The Queue is empty!",
+                actualException.getMessage());
     }
 
     @Test
+    @DisplayName("Check contains returns false on empty queue")
     public void checkContainsReturnFalseOnEmptyQueue() {
         ArrayQueue arrayQueue = new ArrayQueue();
         assertFalse(arrayQueue.contains("L"));
     }
 
     @Test
+    @DisplayName("Check contains works correctly after peek and dequeue")
     public void checkContainsWorksCorrectlyAfterPeekAndDequeue() {
         ArrayQueue arrayQueue = new ArrayQueue();
         arrayQueue.enqueue("M");
@@ -123,6 +138,7 @@ public class ArrayQueueTest {
     }
 
     @Test
+    @DisplayName("Check contains works correctly with null value")
     public void checkContainsWorksCorrectlyWithNullValue() {
         ArrayQueue arrayQueue = new ArrayQueue();
         arrayQueue.enqueue(null);
@@ -130,6 +146,7 @@ public class ArrayQueueTest {
     }
 
     @Test
+    @DisplayName("Check clear after enqueue")
     public void checkClearAfterEnqueue() {
         ArrayQueue arrayQueue = new ArrayQueue();
         arrayQueue.enqueue("P");

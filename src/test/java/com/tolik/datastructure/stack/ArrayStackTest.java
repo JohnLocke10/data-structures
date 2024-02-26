@@ -1,7 +1,7 @@
 package com.tolik.datastructure.stack;
 
-import com.tolik.datastructures.queue.ArrayQueue;
 import com.tolik.datastructures.stack.ArrayStack;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ArrayStackTest {
 
     @Test
+    @DisplayName("Test push and pop work correctly and change size")
     public void testPushAndPopWorkCorrectlyAndChangeSize() {
         ArrayStack arrayStack = new ArrayStack();
         arrayStack.push("A");
@@ -21,6 +22,7 @@ public class ArrayStackTest {
     }
 
     @Test
+    @DisplayName("Test push over initial capacity and pop work correctly and change size")
     public void testPushOverInitialCapacityAndPopWorkCorrectlyAndChangeSize() {
         ArrayStack arrayStack = new ArrayStack(2);
         arrayStack.push("A");
@@ -35,6 +37,7 @@ public class ArrayStackTest {
     }
 
     @Test
+    @DisplayName("Test push and peek")
     public void testPushAndPeek() {
         ArrayStack arrayStack = new ArrayStack();
         arrayStack.push("A");
@@ -46,12 +49,14 @@ public class ArrayStackTest {
     }
 
     @Test
+    @DisplayName("Test isEmpty returns true on new stack")
     public void testIsEmptyReturnTrueOnNewStack() {
         ArrayStack arrayStack = new ArrayStack();
         assertTrue(arrayStack.isEmpty());
     }
 
     @Test
+    @DisplayName("Test isEmpty returns false on stack with data")
     public void testisEmptyReturnFalseOnStackWithData() {
         ArrayStack arrayStack = new ArrayStack();
         arrayStack.push("ABC");
@@ -59,6 +64,7 @@ public class ArrayStackTest {
     }
 
     @Test
+    @DisplayName("Test isEmpty returns true on stack after clear")
     public void testIsEmptyReturnTrueOnStackAfterClear() {
         ArrayStack arrayStack = new ArrayStack();
         arrayStack.push("A");
@@ -68,6 +74,7 @@ public class ArrayStackTest {
     }
 
     @Test
+    @DisplayName("Test contains return true")
     public void testContainsReturnTrue() {
         ArrayStack arrayStack = new ArrayStack();
         arrayStack.push("A");
@@ -75,6 +82,7 @@ public class ArrayStackTest {
     }
 
     @Test
+    @DisplayName("Check contains works correctly with null value")
     public void checkContainsWorksCorrectlyWithNullValue() {
         ArrayStack arrayStack = new ArrayStack();
         arrayStack.push(null);
@@ -82,6 +90,7 @@ public class ArrayStackTest {
     }
 
     @Test
+    @DisplayName("Test contains return false")
     public void testContainsReturnFalse() {
         ArrayStack arrayStack = new ArrayStack();
         arrayStack.push("A");
@@ -89,24 +98,31 @@ public class ArrayStackTest {
     }
 
     @Test
+    @DisplayName("Test contains return false")
     public void testContainsReturnFalseOnEmptyStack() {
         ArrayStack arrayStack = new ArrayStack();
         assertFalse(arrayStack.contains("G"));
     }
 
     @Test
+    @DisplayName("Test throw IllegalStateException when pop on empty stack")
     public void testThrowIllegalStateExceptionWhenPopOnEmptyStack() {
         ArrayStack arrayStack = new ArrayStack();
-        assertThrows(IllegalStateException.class, () -> {
+        IllegalStateException actualException = assertThrows(IllegalStateException.class, () -> {
             arrayStack.pop();
         });
+        assertEquals("The stack is empty!",
+                actualException.getMessage());
     }
 
     @Test
+    @DisplayName("Test throw IllegalStateException when peek on empty stack")
     public void testThrowIllegalStateExceptionWhenPeekOnEmptyStack() {
         ArrayStack arrayStack = new ArrayStack();
-        assertThrows(IllegalStateException.class, () -> {
+        IllegalStateException actualException = assertThrows(IllegalStateException.class, () -> {
             arrayStack.peek();
         });
+        assertEquals("The stack is empty!",
+                actualException.getMessage());
     }
 }
