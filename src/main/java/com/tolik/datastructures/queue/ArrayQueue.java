@@ -1,5 +1,7 @@
 package com.tolik.datastructures.queue;
 
+import java.util.Objects;
+
 public class ArrayQueue implements Queue {
     private int leftIndex = 0;
     private int rightIndex = 0;
@@ -75,7 +77,7 @@ public class ArrayQueue implements Queue {
     @Override
     public boolean contains(Object value) {
         for (int i = leftIndex; i < rightIndex; i++) {
-            if (value.equals(array[i])) {
+            if (Objects.equals(value, array[i])) {
                 return true;
             }
         }
@@ -90,6 +92,22 @@ public class ArrayQueue implements Queue {
         leftIndex = 0;
         rightIndex = 0;
         updateSize();
+    }
+
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("[");
+        for (int i = leftIndex; i < rightIndex; i++) {
+            stringBuilder.append(array[i]);
+
+            if (i != rightIndex - 1) {
+                stringBuilder.append(", ");
+            } else {
+                stringBuilder.append("");
+            }
+        }
+        stringBuilder.append("]");
+        return stringBuilder.toString();
     }
 }
 
