@@ -1,6 +1,8 @@
 package com.tolik.datastructures.stack;
 
-public class ArrayStack implements Stack{
+import java.util.Objects;
+
+public class ArrayStack implements Stack {
     private int size;
     private Object[] array;
 
@@ -19,7 +21,7 @@ public class ArrayStack implements Stack{
     }
 
     private void ensureCapacity() {
-        if(array.length == size){
+        if (array.length == size) {
             Object[] extendedArray = new Object[array.length * 2];
             for (int i = 0; i < array.length; i++) {
                 extendedArray[i] = array[i];
@@ -30,7 +32,7 @@ public class ArrayStack implements Stack{
 
     @Override
     public Object pop() {
-        if(isEmpty()){
+        if (isEmpty()) {
             throw new IllegalStateException("The stack is empty!");
         }
         return array[--size];
@@ -38,7 +40,7 @@ public class ArrayStack implements Stack{
 
     @Override
     public Object peek() {
-        if(isEmpty()){
+        if (isEmpty()) {
             throw new IllegalStateException("The stack is empty!");
         }
         return array[size - 1];
@@ -47,7 +49,7 @@ public class ArrayStack implements Stack{
     @Override
     public boolean contains(Object value) {
         for (int i = 0; i < size; i++) {
-            if (value.equals(array[i])) {
+            if (Objects.equals(value, array[i])) {
                 return true;
             }
         }

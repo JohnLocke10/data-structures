@@ -1,5 +1,6 @@
 package com.tolik.datastructure.stack;
 
+import com.tolik.datastructures.queue.ArrayQueue;
 import com.tolik.datastructures.stack.ArrayStack;
 import org.junit.jupiter.api.Test;
 
@@ -71,6 +72,13 @@ public class ArrayStackTest {
         ArrayStack arrayStack = new ArrayStack();
         arrayStack.push("A");
         assertTrue(arrayStack.contains("A"));
+    }
+
+    @Test
+    public void checkContainsWorksCorrectlyWithNullValue() {
+        ArrayStack arrayStack = new ArrayStack();
+        arrayStack.push(null);
+        assertTrue(arrayStack.contains(null));
     }
 
     @Test

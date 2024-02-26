@@ -1,5 +1,6 @@
 package com.tolik.datastructure.queue;
 
+import com.tolik.datastructures.List.ArrayList;
 import com.tolik.datastructures.queue.ArrayQueue;
 import org.junit.jupiter.api.Test;
 
@@ -119,6 +120,13 @@ public class ArrayQueueTest {
         assertTrue(arrayQueue.contains("M"));
         arrayQueue.dequeue();
         assertFalse(arrayQueue.contains("M"));
+    }
+
+    @Test
+    public void checkContainsWorksCorrectlyWithNullValue() {
+        ArrayQueue arrayQueue = new ArrayQueue();
+        arrayQueue.enqueue(null);
+        assertTrue(arrayQueue.contains(null));
     }
 
     @Test

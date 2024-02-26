@@ -171,6 +171,13 @@ public class ArrayListTest {
     }
 
     @Test
+    public void checkContainsWorksCorrectlyWithNullValue() {
+        ArrayList arrayList = new ArrayList();
+        arrayList.add(null);
+        assertTrue(arrayList.contains(null));
+    }
+
+    @Test
     public void checkContainsAfterGetAndRemove() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("J");
