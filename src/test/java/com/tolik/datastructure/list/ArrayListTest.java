@@ -59,11 +59,15 @@ public class ArrayListTest {
     public void checkThrowExceptionWhenAddToIndexBiggerThanSize() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("J");
+        int indexToAdd = 2;
         IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
             arrayList.add("K", 2);
         });
-        assertEquals("Index should be a positive number less than array size",
-                actualException.getMessage());
+        String expectedException =
+                String.format(
+                        "Index should be a positive number less than array size! Array size: %d .Actual index: %d",
+                        arrayList.size(), indexToAdd);
+        assertEquals(expectedException, actualException.getMessage());
     }
 
     @Test
@@ -71,11 +75,15 @@ public class ArrayListTest {
     public void checkThrowExceptionWhenAddToNegativeIndex() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("S");
+        int indexToAdd = -1;
         IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
-            arrayList.add("T", -1);
+            arrayList.add("T", indexToAdd);
         });
-        assertEquals("Index should be a positive number less than array size",
-                actualException.getMessage());
+        String expectedException =
+                String.format(
+                        "Index should be a positive number less than array size! Array size: %d .Actual index: %d",
+                        arrayList.size(), indexToAdd);
+        assertEquals(expectedException, actualException.getMessage());
     }
 
     @Test
@@ -97,22 +105,28 @@ public class ArrayListTest {
     public void checkThrowExceptionWhenRemoveValueByIndexBiggerThanSize() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("P");
+        int indexToRemove = 1;
         IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
-            arrayList.remove(1);
+            arrayList.remove(indexToRemove);
         });
-        assertEquals("Index should be a positive number less than array size",
-                actualException.getMessage());
+        String expectedException =
+                String.format("Index should be a positive number less than last right value index. Right index: %d "
+                        + ".Actual index: ", arrayList.size() - 1, indexToRemove);
+        assertEquals(expectedException, actualException.getMessage());
     }
 
     @Test
     public void checkThrowExceptionWhenRemoveValueByNegativeIndex() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("R");
+        int indexToRemove = -2;
         IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
-            arrayList.remove(-2);
+            arrayList.remove(indexToRemove);
         });
-        assertEquals("Index should be a positive number less than array size",
-                actualException.getMessage());
+        String expectedException =
+                String.format("Index should be a positive number less than last right value index. Right index: %d "
+                        + ".Actual index: ", arrayList.size() - 1, indexToRemove);
+        assertEquals(expectedException, actualException.getMessage());
     }
 
     @Test
@@ -120,11 +134,14 @@ public class ArrayListTest {
     public void checkThrowExceptionGetValueByNegativeIndex() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("U");
+        int indexToGet = -2;
         IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
-            arrayList.get(-2);
+            arrayList.get(indexToGet);
         });
-        assertEquals("Index should be a positive number less than array size",
-                actualException.getMessage());
+        String expectedException =
+                String.format("Index should be a positive number less than last right value index. Right index: %d "
+                        + ".Actual index: ", arrayList.size() - 1, indexToGet);
+        assertEquals(expectedException, actualException.getMessage());
     }
 
     @Test
@@ -132,11 +149,14 @@ public class ArrayListTest {
     public void checkThrowExceptionWhenGetValueByIndexBiggerThanSize() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("Y");
+        int indexToRemove = 1;
         IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
-            arrayList.remove(1);
+            arrayList.remove(indexToRemove);
         });
-        assertEquals("Index should be a positive number less than array size",
-                actualException.getMessage());
+        String expectedException =
+                String.format("Index should be a positive number less than last right value index. Right index: %d "
+                        + ".Actual index: ", arrayList.size() - 1, indexToRemove);
+        assertEquals(expectedException, actualException.getMessage());
     }
 
     @Test
@@ -154,11 +174,14 @@ public class ArrayListTest {
     public void checkThrowExceptionSetValueByNegativeIndex() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("A");
+        int indexToSet = -2;
         IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
             arrayList.set("B", -2);
         });
-        assertEquals("Index should be a positive number less than array size",
-                actualException.getMessage());
+        String expectedException =
+                String.format("Index should be a positive number less than last right value index. Right index: %d "
+                        + ".Actual index: ", arrayList.size() - 1, indexToSet);
+        assertEquals(expectedException, actualException.getMessage());
     }
 
     @Test
@@ -166,11 +189,14 @@ public class ArrayListTest {
     public void checkThrowExceptionWhenSetValueByIndexBiggerThanSize() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("C");
+        int indexToSet = 1;
         IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
             arrayList.set("D", 1);
         });
-        assertEquals("Index should be a positive number less than array size",
-                actualException.getMessage());
+        String expectedException =
+                String.format("Index should be a positive number less than last right value index. Right index: %d "
+                        + ".Actual index: ", arrayList.size() - 1, indexToSet);
+        assertEquals(expectedException, actualException.getMessage());
     }
 
     @Test
@@ -293,5 +319,4 @@ public class ArrayListTest {
         assertEquals("X", arrayList.get(0));
         assertEquals("Y", arrayList.get(1));
     }
-
 }

@@ -103,8 +103,7 @@ public class ArrayQueueTest {
         IllegalStateException actualException = assertThrows(IllegalStateException.class, () -> {
             arrayQueue.peek();
         });
-        assertEquals("The Queue is empty!",
-                actualException.getMessage());
+        assertEquals("The Queue is empty!", actualException.getMessage());
     }
 
     @Test
@@ -114,8 +113,7 @@ public class ArrayQueueTest {
         IllegalStateException actualException = assertThrows(IllegalStateException.class, () -> {
             arrayQueue.dequeue();
         });
-        assertEquals("The Queue is empty!",
-                actualException.getMessage());
+        assertEquals("The Queue is empty!", actualException.getMessage());
     }
 
     @Test

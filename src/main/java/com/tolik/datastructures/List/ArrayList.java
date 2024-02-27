@@ -17,8 +17,18 @@ public class ArrayList implements List {
 
     @Override
     public void add(Object value) {
+        add(value, size);
+    }
+
+    @Override
+    public void add(Object value, int index) {
+        checkIfIndexToAddIsLessThanSize(index);
         ensureCapacityAndExtendArray();
-        array[size++] = value;
+        for (int i = size; i > index; i--) {
+            array[i] = array[i - 1];
+        }
+        array[index] = value;
+        size++;
     }
 
     private void ensureCapacityAndExtendArray() {
@@ -31,27 +41,27 @@ public class ArrayList implements List {
         }
     }
 
-    @Override
-    public void add(Object value, int index) {
-
-        checkIfIndexIsInCorrectRange(index, size);
-        ensureCapacityAndExtendArray();
-        for (int i = size; i > index; i--) {
-            array[i] = array[i - 1];
+    private void checkIfIndexToAddIsLessThanSize(int index) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException(
+                    String.format(
+                            "Index should be a positive number less than array size! Array size: %d .Actual index: %d",
+                            size, index));
         }
-        array[index] = value;
-        size++;
     }
 
-    private void checkIfIndexIsInCorrectRange(int index, int rightBound) {
+    private void checkIfIndexIsLessThanRightBound(int index, int rightBound) {
         if (index < 0 || index > rightBound) {
-            throw new IndexOutOfBoundsException("Index should be a positive number less than array size");
+            throw new IndexOutOfBoundsException(
+                    String.format("Index should be a positive number less than last right value index. Right index: %d "
+                            + ".Actual index: ", rightBound, index))
+                    ;
         }
     }
 
     @Override
     public Object remove(int index) {
-        checkIfIndexIsInCorrectRange(index, size - 1);
+        checkIfIndexIsLessThanRightBound(index, size - 1);
         Object removedValue = array[index];
         for (int i = index; i < size - 1; i++) {
             array[i] = array[i + 1];
@@ -62,13 +72,13 @@ public class ArrayList implements List {
 
     @Override
     public Object get(int index) {
-        checkIfIndexIsInCorrectRange(index, size - 1);
+        checkIfIndexIsLessThanRightBound(index, size - 1);
         return array[index];
     }
 
     @Override
     public Object set(Object value, int index) {
-        checkIfIndexIsInCorrectRange(index, size - 1);
+        checkIfIndexIsLessThanRightBound(index, size - 1);
         array[index] = value;
         return value;
     }

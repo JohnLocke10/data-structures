@@ -111,8 +111,7 @@ public class ArrayStackTest {
         IllegalStateException actualException = assertThrows(IllegalStateException.class, () -> {
             arrayStack.pop();
         });
-        assertEquals("The stack is empty!",
-                actualException.getMessage());
+        assertEquals("The stack is empty!", actualException.getMessage());
     }
 
     @Test
@@ -122,7 +121,6 @@ public class ArrayStackTest {
         IllegalStateException actualException = assertThrows(IllegalStateException.class, () -> {
             arrayStack.peek();
         });
-        assertEquals("The stack is empty!",
-                actualException.getMessage());
+        assertEquals("The stack is empty!", actualException.getMessage());
     }
 }
