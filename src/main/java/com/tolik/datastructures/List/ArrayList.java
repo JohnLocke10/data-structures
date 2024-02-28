@@ -51,7 +51,7 @@ public class ArrayList implements List {
         if (index < 0 || index > rightBound) {
             throw new IndexOutOfBoundsException(
                     String.format("Index should be a positive number less than last right value index. Right index: %d "
-                            + ".Actual index: ", rightBound, index));
+                            + ".Actual index: %d", rightBound, index));
         }
     }
 

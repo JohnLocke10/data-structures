@@ -111,7 +111,7 @@ public class ArrayListTest {
         });
         String expectedException =
                 String.format("Index should be a positive number less than last right value index. Right index: %d "
-                        + ".Actual index: ", arrayList.size() - 1, indexToRemove);
+                        + ".Actual index: %d", arrayList.size() - 1, indexToRemove);
         assertEquals(expectedException, actualException.getMessage());
     }
 
@@ -125,7 +125,7 @@ public class ArrayListTest {
         });
         String expectedException =
                 String.format("Index should be a positive number less than last right value index. Right index: %d "
-                        + ".Actual index: ", arrayList.size() - 1, indexToRemove);
+                        + ".Actual index: %d", arrayList.size() - 1, indexToRemove);
         assertEquals(expectedException, actualException.getMessage());
     }
 
@@ -140,7 +140,7 @@ public class ArrayListTest {
         });
         String expectedException =
                 String.format("Index should be a positive number less than last right value index. Right index: %d "
-                        + ".Actual index: ", arrayList.size() - 1, indexToGet);
+                        + ".Actual index: %d", arrayList.size() - 1, indexToGet);
         assertEquals(expectedException, actualException.getMessage());
     }
 
@@ -155,7 +155,7 @@ public class ArrayListTest {
         });
         String expectedException =
                 String.format("Index should be a positive number less than last right value index. Right index: %d "
-                        + ".Actual index: ", arrayList.size() - 1, indexToRemove);
+                        + ".Actual index: %d", arrayList.size() - 1, indexToRemove);
         assertEquals(expectedException, actualException.getMessage());
     }
 
@@ -180,7 +180,7 @@ public class ArrayListTest {
         });
         String expectedException =
                 String.format("Index should be a positive number less than last right value index. Right index: %d "
-                        + ".Actual index: ", arrayList.size() - 1, indexToSet);
+                        + ".Actual index: %d", arrayList.size() - 1, indexToSet);
         assertEquals(expectedException, actualException.getMessage());
     }
 
@@ -195,7 +195,7 @@ public class ArrayListTest {
         });
         String expectedException =
                 String.format("Index should be a positive number less than last right value index. Right index: %d "
-                        + ".Actual index: ", arrayList.size() - 1, indexToSet);
+                        + ".Actual index: %d", arrayList.size() - 1, indexToSet);
         assertEquals(expectedException, actualException.getMessage());
     }
 
