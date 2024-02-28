@@ -8,4 +8,5 @@ public interface Stack {
     public int size();
     boolean isEmpty();
     void clear();
+    String toString();
 }

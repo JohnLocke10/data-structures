@@ -1,6 +1,7 @@
 package com.tolik.datastructures.List;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 
 public class ArrayList implements List {
 
@@ -24,9 +25,7 @@ public class ArrayList implements List {
     public void add(Object value, int index) {
         checkIfIndexToAddIsLessThanSize(index);
         ensureCapacityAndExtendArray();
-        for (int i = size; i > index; i--) {
-            array[i] = array[i - 1];
-        }
+        System.arraycopy(array, index, array, index + 1, size - index);
         array[index] = value;
         size++;
     }
@@ -34,9 +33,7 @@ public class ArrayList implements List {
     private void ensureCapacityAndExtendArray() {
         if (size > array.length * 0.75) {
             Object[] extendedArray = new Object[array.length * 2];
-            for (int i = 0; i < size; i++) {
-                extendedArray[i] = array[i];
-            }
+            System.arraycopy(array, 0, extendedArray, 0, size);
             array = extendedArray;
         }
     }
@@ -54,8 +51,7 @@ public class ArrayList implements List {
         if (index < 0 || index > rightBound) {
             throw new IndexOutOfBoundsException(
                     String.format("Index should be a positive number less than last right value index. Right index: %d "
-                            + ".Actual index: ", rightBound, index))
-                    ;
+                            + ".Actual index: ", rightBound, index));
         }
     }
 
@@ -63,9 +59,7 @@ public class ArrayList implements List {
     public Object remove(int index) {
         checkIfIndexIsLessThanRightBound(index, size - 1);
         Object removedValue = array[index];
-        for (int i = index; i < size - 1; i++) {
-            array[i] = array[i + 1];
-        }
+        System.arraycopy(array, index + 1, array, index, size - index - 1);
         size--;
         return removedValue;
     }
@@ -123,28 +117,15 @@ public class ArrayList implements List {
 
     @Override
     public boolean contains(Object value) {
-        for (int i = 0; i < size; i++) {
-            if (Objects.equals(array[i], value)) {
-                return true;
-            }
-        }
-        return false;
+        return indexOf(value) != -1;
     }
 
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("[");
+        StringJoiner stringJoiner = new StringJoiner(",", "[", "]");
         for (int i = 0; i < size; i++) {
-            stringBuilder.append(array[i]);
-
-            if (i != size - 1) {
-                stringBuilder.append(", ");
-            } else {
-                stringBuilder.append("");
-            }
+            stringJoiner.add(array[i].toString());
         }
-        stringBuilder.append("]");
-        return stringBuilder.toString();
+        return stringJoiner.toString();
     }
 
 }

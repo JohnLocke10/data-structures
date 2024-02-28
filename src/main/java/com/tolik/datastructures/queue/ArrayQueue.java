@@ -1,6 +1,7 @@
 package com.tolik.datastructures.queue;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 
 public class ArrayQueue implements Queue {
     private int leftIndex = 0;
@@ -30,18 +31,12 @@ public class ArrayQueue implements Queue {
     private void ensureCapacityAndExtendArray() {
         if (array.length * 0.75 < size || rightIndex == array.length) {
             Object[] extendedArray = new Object[array.length * 2];
-            fillArrayStartingFromZeroIndex(extendedArray);
+            System.arraycopy(array, leftIndex, extendedArray, 0, size);
+            array = extendedArray;
+            leftIndex = 0;
+            rightIndex = size;
+            updateSize();
         }
-    }
-
-    private void fillArrayStartingFromZeroIndex(Object[] extendedArray) {
-        for (int i = 0; i < size; i++) {
-            extendedArray[i] = array[leftIndex + i];
-        }
-        array = extendedArray;
-        leftIndex = 0;
-        rightIndex = size;
-        updateSize();
     }
 
     @Override
@@ -95,19 +90,11 @@ public class ArrayQueue implements Queue {
     }
 
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("[");
+        StringJoiner stringJoiner = new StringJoiner(",", "[", "]");
         for (int i = leftIndex; i < rightIndex; i++) {
-            stringBuilder.append(array[i]);
-
-            if (i != rightIndex - 1) {
-                stringBuilder.append(", ");
-            } else {
-                stringBuilder.append("");
-            }
+            stringJoiner.add(array[i].toString());
         }
-        stringBuilder.append("]");
-        return stringBuilder.toString();
+        return stringJoiner.toString();
     }
 }
 

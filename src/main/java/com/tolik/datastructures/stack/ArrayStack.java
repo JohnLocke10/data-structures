@@ -1,6 +1,7 @@
 package com.tolik.datastructures.stack;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 
 public class ArrayStack implements Stack {
     private int size;
@@ -23,9 +24,7 @@ public class ArrayStack implements Stack {
     private void ensureCapacity() {
         if (array.length == size) {
             Object[] extendedArray = new Object[array.length * 2];
-            for (int i = 0; i < array.length; i++) {
-                extendedArray[i] = array[i];
-            }
+            System.arraycopy(array, 0, extendedArray, 0, size);
             array = extendedArray;
         }
     }
@@ -72,6 +71,14 @@ public class ArrayStack implements Stack {
             array[i] = null;
             size--;
         }
+    }
 
+    @Override
+    public String toString() {
+        StringJoiner stringJoiner = new StringJoiner(",", "[", "]");
+        for (int i = 0; i < size; i++) {
+            stringJoiner.add(array[i].toString());
+        }
+        return stringJoiner.toString();
     }
 }
