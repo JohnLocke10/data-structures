@@ -77,7 +77,7 @@ public class ArrayStack implements Stack {
     public String toString() {
         StringJoiner stringJoiner = new StringJoiner(",", "[", "]");
         for (int i = 0; i < size; i++) {
-            stringJoiner.add(array[i].toString());
+            stringJoiner.add(String.valueOf(array[i]));
         }
         return stringJoiner.toString();
     }

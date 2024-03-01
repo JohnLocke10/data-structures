@@ -92,7 +92,7 @@ public class ArrayQueue implements Queue {
     public String toString() {
         StringJoiner stringJoiner = new StringJoiner(",", "[", "]");
         for (int i = leftIndex; i < rightIndex; i++) {
-            stringJoiner.add(array[i].toString());
+            stringJoiner.add(String.valueOf(array[i]));
         }
         return stringJoiner.toString();
     }

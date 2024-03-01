@@ -42,7 +42,7 @@ public class ArrayList implements List {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException(
                     String.format(
-                            "Index should be a positive number less than array size! Array size: %d .Actual index: %d",
+                            "Index should be a positive number less than array size! Array size: %d. Actual index: %d",
                             size, index));
         }
     }
@@ -123,7 +123,7 @@ public class ArrayList implements List {
     public String toString() {
         StringJoiner stringJoiner = new StringJoiner(",", "[", "]");
         for (int i = 0; i < size; i++) {
-            stringJoiner.add(array[i].toString());
+            stringJoiner.add(String.valueOf(array[i]));
         }
         return stringJoiner.toString();
     }
