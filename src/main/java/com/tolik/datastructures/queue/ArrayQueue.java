@@ -4,13 +4,15 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 public class ArrayQueue implements Queue {
+
+    private static final int DEFAULT_INITIAL_CAPACITY = 10;
     private int leftIndex = 0;
     private int rightIndex = 0;
     private int size = 0;
     private Object[] array;
 
     public ArrayQueue() {
-        this.array = new Object[10];
+        this(DEFAULT_INITIAL_CAPACITY);
     }
 
     public ArrayQueue(int capacity) {
@@ -22,21 +24,6 @@ public class ArrayQueue implements Queue {
         ensureCapacityAndExtendArray();
         array[rightIndex++] = value;
         updateSize();
-    }
-
-    private void updateSize() {
-        size = rightIndex - leftIndex;
-    }
-
-    private void ensureCapacityAndExtendArray() {
-        if (array.length * 0.75 < size || rightIndex == array.length) {
-            Object[] extendedArray = new Object[array.length * 2];
-            System.arraycopy(array, leftIndex, extendedArray, 0, size);
-            array = extendedArray;
-            leftIndex = 0;
-            rightIndex = size;
-            updateSize();
-        }
     }
 
     @Override
@@ -89,12 +76,28 @@ public class ArrayQueue implements Queue {
         updateSize();
     }
 
+    @Override
     public String toString() {
         StringJoiner stringJoiner = new StringJoiner(",", "[", "]");
         for (int i = leftIndex; i < rightIndex; i++) {
             stringJoiner.add(String.valueOf(array[i]));
         }
         return stringJoiner.toString();
+    }
+
+    private void updateSize() {
+        size = rightIndex - leftIndex;
+    }
+
+    private void ensureCapacityAndExtendArray() {
+        if (array.length * 0.75 < size || rightIndex == array.length) {
+            Object[] extendedArray = new Object[array.length * 2];
+            System.arraycopy(array, leftIndex, extendedArray, 0, size);
+            array = extendedArray;
+            leftIndex = 0;
+            rightIndex = size;
+            updateSize();
+        }
     }
 }
 

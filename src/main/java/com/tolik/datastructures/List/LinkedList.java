@@ -40,15 +40,6 @@ public class LinkedList implements List {
         size++;
     }
 
-    private void checkIfIndexToAddIsLessThanSize(int index) {
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException(
-                    String.format(
-                            "Index should be a positive number less than array size! Array size: %d. Actual index: %d",
-                            size, index));
-        }
-    }
-
     @Override
     public Object remove(int index) {
         checkIfIndexIsLessThanRightBound(index, size - 1);
@@ -94,29 +85,25 @@ public class LinkedList implements List {
         }
     }
 
-    private void checkIfIndexIsLessThanRightBound(int index, int rightBound) {
-        if (index < 0 || index > rightBound) {
-            throw new IndexOutOfBoundsException(
-                    String.format("Index should be a positive number less than last right value index. Right index: %d "
-                            + ".Actual index: %d", rightBound, index));
-        }
-    }
-
     @Override
     public Object set(Object value, int index) {
         checkIfIndexIsLessThanRightBound(index, size - 1);
+        Object oldValue;
         if (index == 0) {
+            oldValue = head.value;
             head.value = value;
         } else if (index == size - 1) {
-            tail.value = index;
+            oldValue = tail.value;
+            tail.value = value;
         } else {
             Node currentNode = head;
             for (int i = 1; i <= index; i++) {
                 currentNode = currentNode.next;
             }
+            oldValue = currentNode.value;
             currentNode.value = value;
         }
-        return value;
+        return oldValue;
     }
 
     @Override
@@ -184,5 +171,22 @@ public class LinkedList implements List {
             currentNode = currentNode.next;
         }
         return stringJoiner.toString();
+    }
+
+    private void checkIfIndexToAddIsLessThanSize(int index) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException(
+                    String.format(
+                            "Index should be a positive number less than array size! Array size: %d. Actual index: %d",
+                            size, index));
+        }
+    }
+
+    private void checkIfIndexIsLessThanRightBound(int index, int rightBound) {
+        if (index < 0 || index > rightBound) {
+            throw new IndexOutOfBoundsException(
+                    String.format("Index should be a positive number less than last right value index. Right index: %d "
+                            + ".Actual index: %d", rightBound, index));
+        }
     }
 }

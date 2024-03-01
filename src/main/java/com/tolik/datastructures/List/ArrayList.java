@@ -5,11 +5,12 @@ import java.util.StringJoiner;
 
 public class ArrayList implements List {
 
+    private static final int DEFAULT_INITIAL_CAPACITY = 10;
     private Object[] array;
     private int size;
 
     public ArrayList() {
-        this.array = new Object[10];
+        this(DEFAULT_INITIAL_CAPACITY);
     }
 
     public ArrayList(int capacity) {
@@ -30,31 +31,6 @@ public class ArrayList implements List {
         size++;
     }
 
-    private void ensureCapacityAndExtendArray() {
-        if (size > array.length * 0.75) {
-            Object[] extendedArray = new Object[array.length * 2];
-            System.arraycopy(array, 0, extendedArray, 0, size);
-            array = extendedArray;
-        }
-    }
-
-    private void checkIfIndexToAddIsLessThanSize(int index) {
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException(
-                    String.format(
-                            "Index should be a positive number less than array size! Array size: %d. Actual index: %d",
-                            size, index));
-        }
-    }
-
-    private void checkIfIndexIsLessThanRightBound(int index, int rightBound) {
-        if (index < 0 || index > rightBound) {
-            throw new IndexOutOfBoundsException(
-                    String.format("Index should be a positive number less than last right value index. Right index: %d "
-                            + ".Actual index: %d", rightBound, index));
-        }
-    }
-
     @Override
     public Object remove(int index) {
         checkIfIndexIsLessThanRightBound(index, size - 1);
@@ -73,8 +49,9 @@ public class ArrayList implements List {
     @Override
     public Object set(Object value, int index) {
         checkIfIndexIsLessThanRightBound(index, size - 1);
+        Object oldValue = array[index];
         array[index] = value;
-        return value;
+        return oldValue;
     }
 
     @Override
@@ -126,6 +103,31 @@ public class ArrayList implements List {
             stringJoiner.add(String.valueOf(array[i]));
         }
         return stringJoiner.toString();
+    }
+
+    private void ensureCapacityAndExtendArray() {
+        if (size > array.length * 0.75) {
+            Object[] extendedArray = new Object[array.length * 2];
+            System.arraycopy(array, 0, extendedArray, 0, size);
+            array = extendedArray;
+        }
+    }
+
+    private void checkIfIndexToAddIsLessThanSize(int index) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException(
+                    String.format(
+                            "Index should be a positive number less than array size! Array size: %d. Actual index: %d",
+                            size, index));
+        }
+    }
+
+    private void checkIfIndexIsLessThanRightBound(int index, int rightBound) {
+        if (index < 0 || index > rightBound) {
+            throw new IndexOutOfBoundsException(
+                    String.format("Index should be a positive number less than last right value index. Right index: %d "
+                            + ".Actual index: %d", rightBound, index));
+        }
     }
 
 }
