@@ -3,13 +3,13 @@ package com.tolik.datastructures.queue;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class ArrayQueue implements Queue {
+import static com.tolik.datastructures.general.Constants.QUEUE_IS_EMPTY;
+
+public class ArrayQueue extends AbstractQueue {
 
     private static final int DEFAULT_INITIAL_CAPACITY = 10;
     private int leftIndex = 0;
     private int rightIndex = 0;
-    private int size = 0;
-    private Object[] array;
 
     public ArrayQueue() {
         this(DEFAULT_INITIAL_CAPACITY);
@@ -29,7 +29,7 @@ public class ArrayQueue implements Queue {
     @Override
     public Object dequeue() {
         if (isEmpty()) {
-            throw new IllegalStateException("The Queue is empty!");
+            throw new IllegalStateException(QUEUE_IS_EMPTY);
         }
         Object elementToReturn = array[leftIndex];
         leftIndex++;
@@ -41,19 +41,9 @@ public class ArrayQueue implements Queue {
     @Override
     public Object peek() {
         if (isEmpty()) {
-            throw new IllegalStateException("The Queue is empty!");
+            throw new IllegalStateException(QUEUE_IS_EMPTY);
         }
         return array[leftIndex];
-    }
-
-    @Override
-    public int size() {
-        return size;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return size == 0;
     }
 
     @Override

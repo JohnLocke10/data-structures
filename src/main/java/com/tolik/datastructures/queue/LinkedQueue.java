@@ -3,9 +3,10 @@ package com.tolik.datastructures.queue;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class LinkedQueue implements Queue {
+import static com.tolik.datastructures.general.Constants.QUEUE_IS_EMPTY;
 
-    private int size;
+public class LinkedQueue extends AbstractQueue {
+
     private Node head;
 
     @Override
@@ -27,7 +28,7 @@ public class LinkedQueue implements Queue {
     @Override
     public Object dequeue() {
         if (isEmpty()) {
-            throw new IllegalStateException("The Queue is empty!");
+            throw new IllegalStateException(QUEUE_IS_EMPTY);
         }
         Object result = head.value;
         head = head.next;
@@ -38,19 +39,9 @@ public class LinkedQueue implements Queue {
     @Override
     public Object peek() {
         if (isEmpty()) {
-            throw new IllegalStateException("The Queue is empty!");
+            throw new IllegalStateException(QUEUE_IS_EMPTY);
         }
         return head.value;
-    }
-
-    @Override
-    public int size() {
-        return size;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return size == 0;
     }
 
     @Override

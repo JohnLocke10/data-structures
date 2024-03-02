@@ -3,10 +3,9 @@ package com.tolik.datastructures.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class LinkedList implements List {
+public class LinkedList extends AbstractList {
     private Node head;
     private Node tail;
-    private int size;
 
     @Override
     public void add(Object value) {
@@ -15,7 +14,7 @@ public class LinkedList implements List {
 
     @Override
     public void add(Object value, int index) {
-        checkIfIndexToAddIsLessThanSize(index);
+        checkIfIndexIsPositiveAndLessThanSize(index);
         Node newNode = new Node(value);
         if (size == 0) {
             head = tail = newNode;
@@ -42,7 +41,7 @@ public class LinkedList implements List {
 
     @Override
     public Object remove(int index) {
-        checkIfIndexIsLessThanRightBound(index, size - 1);
+        checkIfIndexIsPositiveAndLessThanRightBound(index);
         Object deletedValue;
         if (size == 1) {
             deletedValue = head.value;
@@ -71,7 +70,7 @@ public class LinkedList implements List {
 
     @Override
     public Object get(int index) {
-        checkIfIndexIsLessThanRightBound(index, size - 1);
+        checkIfIndexIsPositiveAndLessThanRightBound(index);
         if (index == 0) {
             return head.value;
         } else if (index == size - 1) {
@@ -87,7 +86,7 @@ public class LinkedList implements List {
 
     @Override
     public Object set(Object value, int index) {
-        checkIfIndexIsLessThanRightBound(index, size - 1);
+        checkIfIndexIsPositiveAndLessThanRightBound(index);
         Object oldValue;
         if (index == 0) {
             oldValue = head.value;
@@ -111,16 +110,6 @@ public class LinkedList implements List {
         head = null;
         tail = null;
         size = 0;
-    }
-
-    @Override
-    public int size() {
-        return size;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return size == 0;
     }
 
     @Override
@@ -158,11 +147,6 @@ public class LinkedList implements List {
     }
 
     @Override
-    public boolean contains(Object value) {
-        return indexOf(value) != -1;
-    }
-
-    @Override
     public String toString() {
         StringJoiner stringJoiner = new StringJoiner(",", "[", "]");
         Node currentNode = head;
@@ -173,20 +157,4 @@ public class LinkedList implements List {
         return stringJoiner.toString();
     }
 
-    private void checkIfIndexToAddIsLessThanSize(int index) {
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException(
-                    String.format(
-                            "Index should be a positive number less than array size! Array size: %d. Actual index: %d",
-                            size, index));
-        }
-    }
-
-    private void checkIfIndexIsLessThanRightBound(int index, int rightBound) {
-        if (index < 0 || index > rightBound) {
-            throw new IndexOutOfBoundsException(
-                    String.format("Index should be a positive number less than last right value index. Right index: %d "
-                            + ".Actual index: %d", rightBound, index));
-        }
-    }
 }

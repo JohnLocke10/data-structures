@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static com.tolik.datastructures.general.Constants.INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LAST_RIGHT_VALUE_INDEX;
+import static com.tolik.datastructures.general.Constants.INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LIST_SIZE;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -72,9 +74,7 @@ public abstract class AbstractListTest {
             list.add("K", 2);
         });
         String expectedException =
-                String.format(
-                        "Index should be a positive number less than array size! Array size: %d. Actual index: %d",
-                        list.size(), indexToAdd);
+                String.format(INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LIST_SIZE, list.size(), indexToAdd);
         assertEquals(expectedException, actualException.getMessage());
     }
 
@@ -87,9 +87,7 @@ public abstract class AbstractListTest {
             list.add("T", indexToAdd);
         });
         String expectedException =
-                String.format(
-                        "Index should be a positive number less than array size! Array size: %d. Actual index: %d",
-                        list.size(), indexToAdd);
+                String.format(INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LIST_SIZE, list.size(), indexToAdd);
         assertEquals(expectedException, actualException.getMessage());
     }
 
@@ -115,8 +113,7 @@ public abstract class AbstractListTest {
             list.remove(indexToRemove);
         });
         String expectedException =
-                String.format("Index should be a positive number less than last right value index. Right index: %d "
-                        + ".Actual index: %d", list.size() - 1, indexToRemove);
+                String.format(INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LAST_RIGHT_VALUE_INDEX, list.size() - 1, indexToRemove);
         assertEquals(expectedException, actualException.getMessage());
     }
 
@@ -128,8 +125,7 @@ public abstract class AbstractListTest {
             list.remove(indexToRemove);
         });
         String expectedException =
-                String.format("Index should be a positive number less than last right value index. Right index: %d "
-                        + ".Actual index: %d", list.size() - 1, indexToRemove);
+                String.format(INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LAST_RIGHT_VALUE_INDEX, list.size() - 1, indexToRemove);
         assertEquals(expectedException, actualException.getMessage());
     }
 
@@ -142,8 +138,7 @@ public abstract class AbstractListTest {
             list.get(indexToGet);
         });
         String expectedException =
-                String.format("Index should be a positive number less than last right value index. Right index: %d "
-                        + ".Actual index: %d", list.size() - 1, indexToGet);
+                String.format(INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LAST_RIGHT_VALUE_INDEX, list.size() - 1, indexToGet);
         assertEquals(expectedException, actualException.getMessage());
     }
 
@@ -156,8 +151,7 @@ public abstract class AbstractListTest {
             list.get(indexToGet);
         });
         String expectedException =
-                String.format("Index should be a positive number less than last right value index. Right index: %d "
-                        + ".Actual index: %d", list.size() - 1, indexToGet);
+                String.format(INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LAST_RIGHT_VALUE_INDEX, list.size() - 1, indexToGet);
         assertEquals(expectedException, actualException.getMessage());
     }
 
@@ -204,8 +198,7 @@ public abstract class AbstractListTest {
             list.set("B", -2);
         });
         String expectedException =
-                String.format("Index should be a positive number less than last right value index. Right index: %d "
-                        + ".Actual index: %d", list.size() - 1, indexToSet);
+                String.format(INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LAST_RIGHT_VALUE_INDEX, list.size() - 1, indexToSet);
         assertEquals(expectedException, actualException.getMessage());
     }
 
@@ -218,8 +211,7 @@ public abstract class AbstractListTest {
             list.set("D", 1);
         });
         String expectedException =
-                String.format("Index should be a positive number less than last right value index. Right index: %d "
-                        + ".Actual index: %d", list.size() - 1, indexToSet);
+                String.format(INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LAST_RIGHT_VALUE_INDEX, list.size() - 1, indexToSet);
         assertEquals(expectedException, actualException.getMessage());
     }
 

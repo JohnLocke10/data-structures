@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static com.tolik.datastructures.general.Constants.QUEUE_IS_EMPTY;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LinkedQueueTest {
@@ -61,7 +62,7 @@ public class LinkedQueueTest {
         IllegalStateException actualException = assertThrows(IllegalStateException.class, () -> {
             linkedQueue.peek();
         });
-        assertEquals("The Queue is empty!", actualException.getMessage());
+        assertEquals(QUEUE_IS_EMPTY, actualException.getMessage());
     }
 
     @Test
@@ -70,7 +71,7 @@ public class LinkedQueueTest {
         IllegalStateException actualException = assertThrows(IllegalStateException.class, () -> {
             linkedQueue.dequeue();
         });
-        assertEquals("The Queue is empty!", actualException.getMessage());
+        assertEquals(QUEUE_IS_EMPTY, actualException.getMessage());
     }
 
     @Test

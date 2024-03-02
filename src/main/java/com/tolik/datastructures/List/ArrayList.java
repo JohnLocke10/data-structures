@@ -3,11 +3,10 @@ package com.tolik.datastructures.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class ArrayList implements List {
+public class ArrayList extends AbstractList {
 
     private static final int DEFAULT_INITIAL_CAPACITY = 10;
     private Object[] array;
-    private int size;
 
     public ArrayList() {
         this(DEFAULT_INITIAL_CAPACITY);
@@ -24,7 +23,7 @@ public class ArrayList implements List {
 
     @Override
     public void add(Object value, int index) {
-        checkIfIndexToAddIsLessThanSize(index);
+        checkIfIndexIsPositiveAndLessThanSize(index);
         ensureCapacityAndExtendArray();
         System.arraycopy(array, index, array, index + 1, size - index);
         array[index] = value;
@@ -33,7 +32,7 @@ public class ArrayList implements List {
 
     @Override
     public Object remove(int index) {
-        checkIfIndexIsLessThanRightBound(index, size - 1);
+        checkIfIndexIsPositiveAndLessThanRightBound(index);
         Object removedValue = array[index];
         System.arraycopy(array, index + 1, array, index, size - index - 1);
         size--;
@@ -42,13 +41,13 @@ public class ArrayList implements List {
 
     @Override
     public Object get(int index) {
-        checkIfIndexIsLessThanRightBound(index, size - 1);
+        checkIfIndexIsPositiveAndLessThanRightBound(index);
         return array[index];
     }
 
     @Override
     public Object set(Object value, int index) {
-        checkIfIndexIsLessThanRightBound(index, size - 1);
+        checkIfIndexIsPositiveAndLessThanRightBound(index);
         Object oldValue = array[index];
         array[index] = value;
         return oldValue;
@@ -60,16 +59,6 @@ public class ArrayList implements List {
             array[i] = null;
         }
         size = 0;
-    }
-
-    @Override
-    public int size() {
-        return size;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return size == 0;
     }
 
     @Override
@@ -92,11 +81,6 @@ public class ArrayList implements List {
         return -1;
     }
 
-    @Override
-    public boolean contains(Object value) {
-        return indexOf(value) != -1;
-    }
-
     public String toString() {
         StringJoiner stringJoiner = new StringJoiner(",", "[", "]");
         for (int i = 0; i < size; i++) {
@@ -110,23 +94,6 @@ public class ArrayList implements List {
             Object[] extendedArray = new Object[array.length * 2];
             System.arraycopy(array, 0, extendedArray, 0, size);
             array = extendedArray;
-        }
-    }
-
-    private void checkIfIndexToAddIsLessThanSize(int index) {
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException(
-                    String.format(
-                            "Index should be a positive number less than array size! Array size: %d. Actual index: %d",
-                            size, index));
-        }
-    }
-
-    private void checkIfIndexIsLessThanRightBound(int index, int rightBound) {
-        if (index < 0 || index > rightBound) {
-            throw new IndexOutOfBoundsException(
-                    String.format("Index should be a positive number less than last right value index. Right index: %d "
-                            + ".Actual index: %d", rightBound, index));
         }
     }
 
