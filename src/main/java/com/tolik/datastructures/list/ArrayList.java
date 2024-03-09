@@ -1,4 +1,4 @@
-package com.tolik.datastructures.List;
+package com.tolik.datastructures.list;
 
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -23,7 +23,7 @@ public class ArrayList extends AbstractList {
 
     @Override
     public void add(Object value, int index) {
-        checkIfIndexIsPositiveAndLessThanSize(index);
+        validateIndexToAdd(index);
         ensureCapacityAndExtendArray();
         System.arraycopy(array, index, array, index + 1, size - index);
         array[index] = value;
@@ -32,7 +32,7 @@ public class ArrayList extends AbstractList {
 
     @Override
     public Object remove(int index) {
-        checkIfIndexIsPositiveAndLessThanRightBound(index);
+        validateIndex(index);
         Object removedValue = array[index];
         System.arraycopy(array, index + 1, array, index, size - index - 1);
         size--;
@@ -41,13 +41,13 @@ public class ArrayList extends AbstractList {
 
     @Override
     public Object get(int index) {
-        checkIfIndexIsPositiveAndLessThanRightBound(index);
+        validateIndex(index);
         return array[index];
     }
 
     @Override
     public Object set(Object value, int index) {
-        checkIfIndexIsPositiveAndLessThanRightBound(index);
+        validateIndex(index);
         Object oldValue = array[index];
         array[index] = value;
         return oldValue;
@@ -73,7 +73,7 @@ public class ArrayList extends AbstractList {
 
     @Override
     public int lastIndexOf(Object value) {
-        for (int i = size - 1; i > 0; i--) {
+        for (int i = size - 1; i >= 0; i--) {
             if (Objects.equals(array[i], value)) {
                 return i;
             }
@@ -90,7 +90,7 @@ public class ArrayList extends AbstractList {
     }
 
     private void ensureCapacityAndExtendArray() {
-        if (size > array.length * 0.75) {
+        if (size == array.length - 1) {
             Object[] extendedArray = new Object[array.length * 2];
             System.arraycopy(array, 0, extendedArray, 0, size);
             array = extendedArray;

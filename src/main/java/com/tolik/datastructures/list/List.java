@@ -1,4 +1,4 @@
-package com.tolik.datastructures.List;
+package com.tolik.datastructures.list;
 
 public interface List {
     void add(Object value);

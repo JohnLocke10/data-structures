@@ -1,12 +1,10 @@
-package com.tolik.datastructure.queue;
+package com.tolik.datastructures.queue;
 
-import com.tolik.datastructures.queue.ArrayQueue;
-import com.tolik.datastructures.queue.Queue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.tolik.datastructures.general.Constants.QUEUE_IS_EMPTY;
+import static com.tolik.datastructures.queue.AbstractQueue.QUEUE_IS_EMPTY;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ArrayQueueTest {

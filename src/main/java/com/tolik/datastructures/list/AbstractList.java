@@ -1,9 +1,11 @@
-package com.tolik.datastructures.List;
-
-import static com.tolik.datastructures.general.Constants.INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LAST_RIGHT_VALUE_INDEX;
-import static com.tolik.datastructures.general.Constants.INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LIST_SIZE;
+package com.tolik.datastructures.list;
 
 public abstract class AbstractList implements List {
+
+    static final String INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LIST_SIZE =
+            "Index should be in range from 0(inclusive) till list.size(exclusive)! List size: %d. Actual index: %d";
+    static final String INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LAST_RIGHT_VALUE_INDEX =
+            "Index should be from 0(inclusive) till last right value index(exclusive). Right index: %d .Actual index: %d";
 
     int size;
 
@@ -22,14 +24,14 @@ public abstract class AbstractList implements List {
         return indexOf(value) != -1;
     }
 
-    void checkIfIndexIsPositiveAndLessThanSize(int index) {
+    void validateIndexToAdd(int index) {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException(
                     String.format(INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LIST_SIZE, size, index));
         }
     }
 
-    void checkIfIndexIsPositiveAndLessThanRightBound(int index) {
+    void validateIndex(int index) {
         if (index < 0 || index > size - 1) {
             throw new IndexOutOfBoundsException(
                     String.format(INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LAST_RIGHT_VALUE_INDEX, size - 1, index));

@@ -3,8 +3,6 @@ package com.tolik.datastructures.queue;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-import static com.tolik.datastructures.general.Constants.QUEUE_IS_EMPTY;
-
 public class ArrayQueue extends AbstractQueue {
 
     private static final int DEFAULT_INITIAL_CAPACITY = 10;
@@ -80,7 +78,8 @@ public class ArrayQueue extends AbstractQueue {
     }
 
     private void ensureCapacityAndExtendArray() {
-        if (array.length * 0.75 < size || rightIndex == array.length) {
+        reorganiseElements();
+        if (rightIndex == array.length) {
             Object[] extendedArray = new Object[array.length * 2];
             System.arraycopy(array, leftIndex, extendedArray, 0, size);
             array = extendedArray;
@@ -88,6 +87,13 @@ public class ArrayQueue extends AbstractQueue {
             rightIndex = size;
             updateSize();
         }
+    }
+
+    private void reorganiseElements() {
+        System.arraycopy(array, leftIndex, array, 0, size);
+        leftIndex = 0;
+        rightIndex = size;
+        updateSize();
     }
 }
 

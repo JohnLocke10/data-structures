@@ -1,6 +1,5 @@
-package com.tolik.datastructure.stack;
+package com.tolik.datastructures.stack;
 
-import com.tolik.datastructures.stack.ArrayStack;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,15 +1,10 @@
-package com.tolik.datastructure.list;
+package com.tolik.datastructures.list;
 
-import com.tolik.datastructures.List.LinkedList;
-import com.tolik.datastructures.List.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.tolik.datastructures.general.Constants.INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LAST_RIGHT_VALUE_INDEX;
-import static com.tolik.datastructures.general.Constants.INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LIST_SIZE;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class AbstractListTest {
 
@@ -19,7 +14,7 @@ public abstract class AbstractListTest {
 
     @BeforeEach
     public void setUp() {
-        list = new LinkedList();
+        list = getList();
     }
 
     @Test
@@ -29,13 +24,16 @@ public abstract class AbstractListTest {
         list.add("A");
         list.add("B");
         list.add("C");
+        list.add("D");
+        assertEquals(4, list.size());
+        assertEquals("C", list.remove(2));
         assertEquals(3, list.size());
-        list.remove(2);
+        assertEquals("D", list.remove(2));
         assertEquals(2, list.size());
-        list.remove(0);
+        assertEquals("A", list.remove(0));
         assertEquals(1, list.size());
         assertEquals("B", list.get(0));
-        list.remove(0);
+        assertEquals("B", list.remove(0));
         assertEquals(0, list.size());
     }
 
@@ -69,13 +67,11 @@ public abstract class AbstractListTest {
     @DisplayName("Check throw exception when add to index bigger than size")
     public void checkThrowExceptionWhenAddToIndexBiggerThanSize() {
         list.add("J");
-        int indexToAdd = 2;
         IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
             list.add("K", 2);
         });
-        String expectedException =
-                String.format(INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LIST_SIZE, list.size(), indexToAdd);
-        assertEquals(expectedException, actualException.getMessage());
+        assertEquals("Index should be in range from 0(inclusive) till list.size(exclusive)!" +
+                " List size: 1. Actual index: 2", actualException.getMessage());
     }
 
     @Test
@@ -86,9 +82,8 @@ public abstract class AbstractListTest {
         IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
             list.add("T", indexToAdd);
         });
-        String expectedException =
-                String.format(INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LIST_SIZE, list.size(), indexToAdd);
-        assertEquals(expectedException, actualException.getMessage());
+        assertEquals("Index should be in range from 0(inclusive) till list.size(exclusive)!" +
+                " List size: 1. Actual index: -1", actualException.getMessage());
     }
 
     @Test
@@ -98,23 +93,21 @@ public abstract class AbstractListTest {
         list.add("N");
         list.add("O");
         assertEquals(3, list.size());
-        list.remove(1);
+        assertEquals("N", list.remove(1));
         assertEquals(2, list.size());
         assertEquals("M", list.get(0));
         assertEquals("O", list.get(1));
     }
 
     @Test
-    @DisplayName("Check throw exception when remove value by index bigger than size")
-    public void checkThrowExceptionWhenRemoveValueByIndexBiggerThanSize() {
+    @DisplayName("Check throw exception when remove value by index bigger than right bound")
+    public void checkThrowExceptionWhenRemoveValueByIndexBiggerThanRightBound() {
         list.add("P");
-        int indexToRemove = 1;
         IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
-            list.remove(indexToRemove);
+            list.remove(1);
         });
-        String expectedException =
-                String.format(INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LAST_RIGHT_VALUE_INDEX, list.size() - 1, indexToRemove);
-        assertEquals(expectedException, actualException.getMessage());
+        assertEquals("Index should be from 0(inclusive) till last right value index(exclusive)." +
+                " Right index: 0 .Actual index: 1", actualException.getMessage());
     }
 
     @Test
@@ -124,35 +117,30 @@ public abstract class AbstractListTest {
         IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
             list.remove(indexToRemove);
         });
-        String expectedException =
-                String.format(INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LAST_RIGHT_VALUE_INDEX, list.size() - 1, indexToRemove);
-        assertEquals(expectedException, actualException.getMessage());
+        assertEquals("Index should be from 0(inclusive) till last right value index(exclusive)." +
+                " Right index: 0 .Actual index: -2", actualException.getMessage());
     }
 
     @Test
     @DisplayName("Check throw exception when remove value by negative index")
     public void checkThrowExceptionGetValueByNegativeIndex() {
         list.add("U");
-        int indexToGet = -2;
         IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
-            list.get(indexToGet);
+            list.get(-2);
         });
-        String expectedException =
-                String.format(INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LAST_RIGHT_VALUE_INDEX, list.size() - 1, indexToGet);
-        assertEquals(expectedException, actualException.getMessage());
+        assertEquals("Index should be from 0(inclusive) till last right value index(exclusive)." +
+                " Right index: 0 .Actual index: -2", actualException.getMessage());
     }
 
     @Test
     @DisplayName("Check throw exception when get value by index bigger than size")
     public void checkThrowExceptionWhenGetValueByIndexBiggerThanSize() {
         list.add("Y");
-        int indexToGet = 1;
         IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
-            list.get(indexToGet);
+            list.get(1);
         });
-        String expectedException =
-                String.format(INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LAST_RIGHT_VALUE_INDEX, list.size() - 1, indexToGet);
-        assertEquals(expectedException, actualException.getMessage());
+        assertEquals("Index should be from 0(inclusive) till last right value index(exclusive)." +
+                " Right index: 0 .Actual index: 1", actualException.getMessage());
     }
 
     @Test
@@ -193,26 +181,22 @@ public abstract class AbstractListTest {
     @DisplayName("Check throw exception set value by negative index")
     public void checkThrowExceptionSetValueByNegativeIndex() {
         list.add("A");
-        int indexToSet = -2;
         IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
             list.set("B", -2);
         });
-        String expectedException =
-                String.format(INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LAST_RIGHT_VALUE_INDEX, list.size() - 1, indexToSet);
-        assertEquals(expectedException, actualException.getMessage());
+        assertEquals("Index should be from 0(inclusive) till last right value index(exclusive)." +
+                " Right index: 0 .Actual index: -2", actualException.getMessage());
     }
 
     @Test
     @DisplayName("Check throw exception when set value by index bigger than size")
     public void checkThrowExceptionWhenSetValueByIndexBiggerThanSize() {
         list.add("C");
-        int indexToSet = 1;
         IndexOutOfBoundsException actualException = assertThrows(IndexOutOfBoundsException.class, () -> {
             list.set("D", 1);
         });
-        String expectedException =
-                String.format(INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LAST_RIGHT_VALUE_INDEX, list.size() - 1, indexToSet);
-        assertEquals(expectedException, actualException.getMessage());
+        assertEquals("Index should be from 0(inclusive) till last right value index(exclusive)." +
+                " Right index: 0 .Actual index: 1", actualException.getMessage());
     }
 
     @Test
@@ -254,7 +238,7 @@ public abstract class AbstractListTest {
         list.add("J");
         list.get(0);
         assertTrue(list.contains("J"));
-        list.remove(0);
+        assertEquals("J", list.remove(0));
         assertFalse(list.contains("J"));
     }
 
@@ -290,6 +274,16 @@ public abstract class AbstractListTest {
         list.add("W");
         list.add("O");
         assertEquals(2, list.lastIndexOf("W"));
+    }
+
+    @Test
+    @DisplayName("Check last index of for zero index")
+    public void checkLastIndexOfForZeroIndex() {
+        list.add("Zero");
+        list.add("P");
+        list.add("R");
+        list.add("S");
+        assertEquals(0, list.lastIndexOf("Zero"));
     }
 
     @Test

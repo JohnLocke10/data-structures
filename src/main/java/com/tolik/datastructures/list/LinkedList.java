@@ -1,4 +1,4 @@
-package com.tolik.datastructures.List;
+package com.tolik.datastructures.list;
 
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -14,7 +14,7 @@ public class LinkedList extends AbstractList {
 
     @Override
     public void add(Object value, int index) {
-        checkIfIndexIsPositiveAndLessThanSize(index);
+        validateIndexToAdd(index);
         Node newNode = new Node(value);
         if (size == 0) {
             head = tail = newNode;
@@ -27,28 +27,25 @@ public class LinkedList extends AbstractList {
             head.prev = newNode;
             head = newNode;
         } else {
-            Node currentNode = head;
-            for (int i = 1; i < size - 1; i++) {
-                currentNode = currentNode.next;
-            }
-            newNode.next = currentNode.next;
-            newNode.prev = currentNode;
-            currentNode.next.prev = newNode;
-            currentNode.next = newNode;
+            Node findedNode = findNode(index);
+            newNode.next = findedNode;
+            newNode.prev = findedNode.prev;
+            findedNode.prev.next = newNode;
+            findedNode.prev = newNode;
         }
         size++;
     }
 
     @Override
     public Object remove(int index) {
-        checkIfIndexIsPositiveAndLessThanRightBound(index);
+        validateIndex(index);
         Object deletedValue;
         if (size == 1) {
             deletedValue = head.value;
             head = null;
             tail = null;
         } else if (index == 0) {
-            deletedValue = head;
+            deletedValue = head.value;
             head = head.next;
             head.prev = null;
         } else if (index == size - 1) {
@@ -56,13 +53,10 @@ public class LinkedList extends AbstractList {
             tail = tail.prev;
             tail.next = null;
         } else {
-            Node currentNode = head;
-            for (int i = 1; i < size - 1; i++) {
-                currentNode = currentNode.next;
-            }
-            deletedValue = currentNode.value;
-            currentNode.next.prev = currentNode.prev;
-            currentNode.prev.next = currentNode.next;
+            Node findedNode = findNode(index);
+            deletedValue = findedNode.value;
+            findedNode.next.prev = findedNode.prev;
+            findedNode.prev.next = findedNode.next;
         }
         size--;
         return deletedValue;
@@ -70,23 +64,20 @@ public class LinkedList extends AbstractList {
 
     @Override
     public Object get(int index) {
-        checkIfIndexIsPositiveAndLessThanRightBound(index);
+        validateIndex(index);
         if (index == 0) {
             return head.value;
         } else if (index == size - 1) {
             return tail.value;
         } else {
-            Node currentNode = head;
-            for (int i = 0; i < index; i++) {
-                currentNode = currentNode.next;
-            }
-            return currentNode.value;
+            Node findedNode = findNode(index);
+            return findedNode.value;
         }
     }
 
     @Override
     public Object set(Object value, int index) {
-        checkIfIndexIsPositiveAndLessThanRightBound(index);
+        validateIndex(index);
         Object oldValue;
         if (index == 0) {
             oldValue = head.value;
@@ -95,12 +86,9 @@ public class LinkedList extends AbstractList {
             oldValue = tail.value;
             tail.value = value;
         } else {
-            Node currentNode = head;
-            for (int i = 1; i <= index; i++) {
-                currentNode = currentNode.next;
-            }
-            oldValue = currentNode.value;
-            currentNode.value = value;
+            Node findedNode = findNode(index);
+            oldValue = findedNode.value;
+            findedNode.value = value;
         }
         return oldValue;
     }
@@ -115,16 +103,11 @@ public class LinkedList extends AbstractList {
     @Override
     public int indexOf(Object value) {
         Node currentNode = head;
-        if (Objects.isNull(currentNode)) {
-            return -1;
-        } else if (Objects.equals(currentNode.value, value)) {
-            return 0;
-        }
-        for (int i = 1; i < size; i++) {
-            currentNode = currentNode.next;
+        for (int i = 0; i < size; i++) {
             if (Objects.equals(currentNode.value, value)) {
                 return i;
             }
+            currentNode = currentNode.next;
         }
         return -1;
     }
@@ -132,16 +115,11 @@ public class LinkedList extends AbstractList {
     @Override
     public int lastIndexOf(Object value) {
         Node currentNode = tail;
-        if (Objects.isNull(currentNode)) {
-            return -1;
-        } else if (Objects.equals(currentNode.value, value)) {
-            return size - 1;
-        }
-        for (int i = size - 2; i > 0; i--) {
-            currentNode = currentNode.prev;
+        for (int i = size - 1; i >= 0; i--) {
             if (Objects.equals(currentNode.value, value)) {
                 return i;
             }
+            currentNode = currentNode.prev;
         }
         return -1;
     }
@@ -155,6 +133,30 @@ public class LinkedList extends AbstractList {
             currentNode = currentNode.next;
         }
         return stringJoiner.toString();
+    }
+
+    private Node findNode(int index) {
+        if (index <= size / 2) {
+            return findStartingFromHead(index);
+        } else {
+            return findStartingFromTail(index);
+        }
+    }
+
+    private Node findStartingFromHead(int index) {
+        Node currentNode = head;
+        for (int i = 1; i <= index; i++) {
+            currentNode = currentNode.next;
+        }
+        return currentNode;
+    }
+
+    private Node findStartingFromTail(int index) {
+        Node currentNode = tail;
+        for (int i = size - 1; i > index; i--) {
+            currentNode = currentNode.prev;
+        }
+        return currentNode;
     }
 
 }

@@ -3,8 +3,6 @@ package com.tolik.datastructures.queue;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-import static com.tolik.datastructures.general.Constants.QUEUE_IS_EMPTY;
-
 public class LinkedQueue extends AbstractQueue {
 
     private Node head;
