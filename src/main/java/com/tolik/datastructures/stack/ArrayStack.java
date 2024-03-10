@@ -1,9 +1,10 @@
 package com.tolik.datastructures.stack;
 
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class ArrayStack implements Stack {
+public class ArrayStack implements Stack, Iterable {
     private int size;
     private Object[] array;
 
@@ -80,5 +81,26 @@ public class ArrayStack implements Stack {
             stringJoiner.add(String.valueOf(array[i]));
         }
         return stringJoiner.toString();
+    }
+
+    @Override
+    public Iterator iterator() {
+        return new StackIterator();
+    }
+
+    private class StackIterator implements Iterator {
+
+        private int index = 0;
+
+        @Override
+        public boolean hasNext() {
+            return index < size;
+        }
+
+        @Override
+        public Object next() {
+            Object value = array[index++];
+            return value;
+        }
     }
 }

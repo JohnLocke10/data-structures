@@ -1,6 +1,6 @@
 package com.tolik.datastructures.list;
 
-public interface List {
+public interface List extends  Iterable{
     void add(Object value);
 
     void add(Object value, int index);

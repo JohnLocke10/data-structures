@@ -1,5 +1,6 @@
 package com.tolik.datastructures.list;
 
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -92,4 +93,23 @@ public class ArrayList extends AbstractList {
         }
     }
 
+    @Override
+    public Iterator iterator() {
+        return new ArrayListIterator();
+    }
+
+    private class ArrayListIterator implements Iterator {
+        private int index = 0;
+
+        @Override
+        public boolean hasNext() {
+            return index < size;
+        }
+
+        @Override
+        public Object next() {
+            Object value = array[index++];
+            return value;
+        }
+    }
 }

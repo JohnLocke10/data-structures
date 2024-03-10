@@ -1,6 +1,6 @@
 package com.tolik.datastructures.queue;
 
-public interface Queue {
+public interface Queue extends Iterable{
     public void enqueue(Object value);
     public Object dequeue();
     Object peek();

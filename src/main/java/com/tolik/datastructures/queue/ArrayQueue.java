@@ -1,5 +1,6 @@
 package com.tolik.datastructures.queue;
 
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -95,5 +96,26 @@ public class ArrayQueue extends AbstractQueue {
         rightIndex = size;
         updateSize();
     }
+
+    @Override
+    public Iterator iterator() {
+        return new ArrayQueueIterator();
+    }
+
+    private class ArrayQueueIterator implements Iterator {
+        private int index = 0;
+
+        @Override
+        public boolean hasNext() {
+            return index < size;
+        }
+
+        @Override
+        public Object next() {
+            Object value = array[index++];
+            return value;
+        }
+    }
+
 }
 

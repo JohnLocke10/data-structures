@@ -1,5 +1,6 @@
 package com.tolik.datastructures.queue;
 
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -69,6 +70,29 @@ public class LinkedQueue extends AbstractQueue {
             currentNode = currentNode.next;
         }
         return stringJoiner.toString();
+    }
+
+    @Override
+    public Iterator iterator() {
+        return new LinkedQueueIterator();
+    }
+
+    private class LinkedQueueIterator implements Iterator {
+        private int index = 0;
+        private Node currentNode = head;
+
+        @Override
+        public boolean hasNext() {
+            return index < size;
+        }
+
+        @Override
+        public Object next() {
+            Object value = currentNode.value;
+            currentNode = currentNode.next;
+            index++;
+            return value;
+        }
     }
 
     private static class Node {

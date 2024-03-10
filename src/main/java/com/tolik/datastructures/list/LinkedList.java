@@ -1,5 +1,6 @@
 package com.tolik.datastructures.list;
 
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -152,6 +153,29 @@ public class LinkedList extends AbstractList {
             currentNode = currentNode.prev;
         }
         return currentNode;
+    }
+
+    @Override
+    public Iterator iterator() {
+        return new LinkedListIterator();
+    }
+
+    private class LinkedListIterator implements Iterator {
+        private int index = 0;
+        private Node currentNode = head;
+
+        @Override
+        public boolean hasNext() {
+            return index < size;
+        }
+
+        @Override
+        public Object next() {
+            Object value = currentNode.value;
+            currentNode = currentNode.next;
+            index++;
+            return value;
+        }
     }
 
     private static class Node {
