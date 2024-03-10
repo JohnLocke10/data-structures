@@ -8,11 +8,6 @@ public class LinkedList extends AbstractList {
     private Node tail;
 
     @Override
-    public void add(Object value) {
-        add(value, size);
-    }
-
-    @Override
     public void add(Object value, int index) {
         validateIndexToAdd(index);
         Node newNode = new Node(value);
@@ -157,6 +152,16 @@ public class LinkedList extends AbstractList {
             currentNode = currentNode.prev;
         }
         return currentNode;
+    }
+
+    private static class Node {
+        private Object value;
+        private Node next;
+        private Node prev;
+
+        public Node(Object value) {
+            this.value = value;
+        }
     }
 
 }

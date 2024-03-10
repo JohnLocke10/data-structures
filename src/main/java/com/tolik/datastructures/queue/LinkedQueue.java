@@ -70,4 +70,13 @@ public class LinkedQueue extends AbstractQueue {
         }
         return stringJoiner.toString();
     }
+
+    private static class Node {
+        private Object value;
+        private Node next;
+
+        public Node(Object value) {
+            this.value = value;
+        }
+    }
 }

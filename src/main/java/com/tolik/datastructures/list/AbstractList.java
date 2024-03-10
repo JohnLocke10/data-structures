@@ -20,6 +20,11 @@ public abstract class AbstractList implements List {
     }
 
     @Override
+    public void add(Object value) {
+        add(value, size);
+    }
+
+    @Override
     public boolean contains(Object value) {
         return indexOf(value) != -1;
     }

@@ -17,11 +17,6 @@ public class ArrayList extends AbstractList {
     }
 
     @Override
-    public void add(Object value) {
-        add(value, size);
-    }
-
-    @Override
     public void add(Object value, int index) {
         validateIndexToAdd(index);
         ensureCapacityAndExtendArray();
