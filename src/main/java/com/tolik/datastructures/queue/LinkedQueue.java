@@ -62,17 +62,6 @@ public class LinkedQueue extends AbstractQueue {
     }
 
     @Override
-    public String toString() {
-        StringJoiner stringJoiner = new StringJoiner(",", "[", "]");
-        Node currentNode = head;
-        for (int i = 0; i < size; i++) {
-            stringJoiner.add(String.valueOf(currentNode.value));
-            currentNode = currentNode.next;
-        }
-        return stringJoiner.toString();
-    }
-
-    @Override
     public Iterator iterator() {
         return new LinkedQueueIterator();
     }

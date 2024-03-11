@@ -150,4 +150,30 @@ public class ArrayQueueTest {
         assertEquals(0, arrayQueue.size());
         assertTrue(arrayQueue.isEmpty());
     }
+
+    @Test
+    @DisplayName("check iterator adds letters in correct order")
+    public void checkIteratorAddsLettersInCorrectOrder() {
+        arrayQueue.enqueue("H");
+        arrayQueue.enqueue("E");
+        arrayQueue.enqueue("L");
+        arrayQueue.enqueue("L");
+        arrayQueue.enqueue("O");
+        String actualString = "";
+        for (Object object : arrayQueue) {
+            actualString += object;
+        }
+        assertEquals("HELLO", actualString);
+    }
+
+    @Test
+    @DisplayName("check toString adds letters in correct order")
+    public void checkToStringAddsLettersInCorrectOrder() {
+        arrayQueue.enqueue("H");
+        arrayQueue.enqueue("O");
+        arrayQueue.enqueue("L");
+        arrayQueue.enqueue("A");
+        String actualString = arrayQueue.toString();
+        assertEquals("[H,O,L,A]", actualString);
+    }
 }

@@ -77,8 +77,8 @@ public class ArrayStack implements Stack, Iterable {
     @Override
     public String toString() {
         StringJoiner stringJoiner = new StringJoiner(",", "[", "]");
-        for (int i = 0; i < size; i++) {
-            stringJoiner.add(String.valueOf(array[i]));
+        for (Object object : this) {
+            stringJoiner.add(String.valueOf(object));
         }
         return stringJoiner.toString();
     }

@@ -65,15 +65,6 @@ public class ArrayQueue extends AbstractQueue {
         updateSize();
     }
 
-    @Override
-    public String toString() {
-        StringJoiner stringJoiner = new StringJoiner(",", "[", "]");
-        for (int i = leftIndex; i < rightIndex; i++) {
-            stringJoiner.add(String.valueOf(array[i]));
-        }
-        return stringJoiner.toString();
-    }
-
     private void updateSize() {
         size = rightIndex - leftIndex;
     }

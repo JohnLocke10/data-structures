@@ -77,14 +77,6 @@ public class ArrayList extends AbstractList {
         return -1;
     }
 
-    public String toString() {
-        StringJoiner stringJoiner = new StringJoiner(",", "[", "]");
-        for (int i = 0; i < size; i++) {
-            stringJoiner.add(String.valueOf(array[i]));
-        }
-        return stringJoiner.toString();
-    }
-
     private void ensureCapacityAndExtendArray() {
         if (size == array.length - 1) {
             Object[] extendedArray = new Object[array.length * 2];

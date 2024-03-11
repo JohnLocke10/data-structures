@@ -106,4 +106,30 @@ public class LinkedQueueTest {
         assertEquals(0, linkedQueue.size());
         assertTrue(linkedQueue.isEmpty());
     }
+
+    @Test
+    @DisplayName("check iterator adds letters in correct order")
+    public void checkIteratorAddsLettersInCorrectOrder() {
+        linkedQueue.enqueue("H");
+        linkedQueue.enqueue("E");
+        linkedQueue.enqueue("L");
+        linkedQueue.enqueue("L");
+        linkedQueue.enqueue("O");
+        String actualString = "";
+        for (Object object : linkedQueue) {
+            actualString += object;
+        }
+        assertEquals("HELLO", actualString);
+    }
+
+    @Test
+    @DisplayName("check toString adds letters in correct order")
+    public void checkToStringAddsLettersInCorrectOrder() {
+        linkedQueue.enqueue("H");
+        linkedQueue.enqueue("O");
+        linkedQueue.enqueue("L");
+        linkedQueue.enqueue("A");
+        String actualString = linkedQueue.toString();
+        assertEquals("[H,O,L,A]", actualString);
+    }
 }

@@ -1,5 +1,7 @@
 package com.tolik.datastructures.list;
 
+import java.util.StringJoiner;
+
 public abstract class AbstractList implements List {
 
     static final String INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LIST_SIZE =
@@ -27,6 +29,15 @@ public abstract class AbstractList implements List {
     @Override
     public boolean contains(Object value) {
         return indexOf(value) != -1;
+    }
+
+    @Override
+    public String toString() {
+        StringJoiner stringJoiner = new StringJoiner(",", "[", "]");
+        for (Object object : this) {
+            stringJoiner.add(String.valueOf(object));
+        }
+        return stringJoiner.toString();
     }
 
     void validateIndexToAdd(int index) {

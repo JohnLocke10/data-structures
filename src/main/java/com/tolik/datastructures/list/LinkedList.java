@@ -120,17 +120,6 @@ public class LinkedList extends AbstractList {
         return -1;
     }
 
-    @Override
-    public String toString() {
-        StringJoiner stringJoiner = new StringJoiner(",", "[", "]");
-        Node currentNode = head;
-        for (int i = 0; i < size; i++) {
-            stringJoiner.add(String.valueOf(currentNode.value));
-            currentNode = currentNode.next;
-        }
-        return stringJoiner.toString();
-    }
-
     private Node findNode(int index) {
         if (index <= size / 2) {
             return findStartingFromHead(index);

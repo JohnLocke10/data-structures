@@ -306,4 +306,30 @@ public abstract class AbstractListTest {
         assertEquals(-1, list.indexOf("N"));
         assertEquals(-1, list.lastIndexOf("N"));
     }
+
+    @Test
+    @DisplayName("check iterator adds letters in correct order")
+    public void checkIteratorAddsLettersInCorrectOrder() {
+        list.add("H");
+        list.add("E");
+        list.add("L");
+        list.add("L");
+        list.add("O");
+        String actualString = "";
+        for (Object object : list) {
+            actualString += object;
+        }
+        assertEquals("HELLO", actualString);
+    }
+
+    @Test
+    @DisplayName("check toString adds letters in correct order")
+    public void checkToStringAddsLettersInCorrectOrder() {
+        list.add("H");
+        list.add("O");
+        list.add("L");
+        list.add("A");
+        String actualString = list.toString();
+        assertEquals("[H,O,L,A]", actualString);
+    }
 }
