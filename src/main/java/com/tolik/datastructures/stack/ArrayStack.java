@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class ArrayStack implements Stack, Iterable {
+public class ArrayStack implements Stack {
     private int size;
     private Object[] array;
 
@@ -48,8 +48,8 @@ public class ArrayStack implements Stack, Iterable {
 
     @Override
     public boolean contains(Object value) {
-        for (int i = 0; i < size; i++) {
-            if (Objects.equals(value, array[i])) {
+        for (Object object : this) {
+            if (Objects.equals(object, value)) {
                 return true;
             }
         }

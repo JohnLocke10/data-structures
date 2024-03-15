@@ -45,12 +45,9 @@ public class LinkedQueue extends AbstractQueue {
 
     @Override
     public boolean contains(Object value) {
-        Node currentNode = head;
-        for (int i = 0; i < size; i++) {
-            if (Objects.equals(currentNode.value, value)) {
-                return true;
-            }
-            currentNode = currentNode.next;
+        for (Object object : this) {
+            Objects.equals(object, value);
+            return true;
         }
         return false;
     }

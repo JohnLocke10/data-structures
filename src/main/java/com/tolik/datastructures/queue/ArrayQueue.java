@@ -47,8 +47,8 @@ public class ArrayQueue extends AbstractQueue {
 
     @Override
     public boolean contains(Object value) {
-        for (int i = leftIndex; i < rightIndex; i++) {
-            if (Objects.equals(value, array[i])) {
+        for (Object object : this) {
+            if (Objects.equals(object, value)) {
                 return true;
             }
         }
