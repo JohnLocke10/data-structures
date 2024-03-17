@@ -2,16 +2,15 @@ package com.tolik.datastructures.list;
 
 import java.util.Iterator;
 import java.util.Objects;
-import java.util.StringJoiner;
 
-public class LinkedList extends AbstractList {
-    private Node head;
-    private Node tail;
+public class LinkedList<T> extends AbstractList<T> {
+    private Node<T> head;
+    private Node<T> tail;
 
     @Override
-    public void add(Object value, int index) {
+    public void add(T value, int index) {
         validateIndexToAdd(index);
-        Node newNode = new Node(value);
+        Node<T> newNode = new Node<>(value);
         if (size == 0) {
             head = tail = newNode;
         } else if (index == size) {
@@ -23,7 +22,7 @@ public class LinkedList extends AbstractList {
             head.prev = newNode;
             head = newNode;
         } else {
-            Node findedNode = findNode(index);
+            Node<T> findedNode = findNode(index);
             newNode.next = findedNode;
             newNode.prev = findedNode.prev;
             findedNode.prev.next = newNode;
@@ -33,9 +32,9 @@ public class LinkedList extends AbstractList {
     }
 
     @Override
-    public Object remove(int index) {
+    public T remove(int index) {
         validateIndex(index);
-        Object deletedValue;
+        T deletedValue;
         if (size == 1) {
             deletedValue = head.value;
             head = null;
@@ -49,7 +48,7 @@ public class LinkedList extends AbstractList {
             tail = tail.prev;
             tail.next = null;
         } else {
-            Node findedNode = findNode(index);
+            Node<T> findedNode = findNode(index);
             deletedValue = findedNode.value;
             findedNode.next.prev = findedNode.prev;
             findedNode.prev.next = findedNode.next;
@@ -59,22 +58,22 @@ public class LinkedList extends AbstractList {
     }
 
     @Override
-    public Object get(int index) {
+    public T get(int index) {
         validateIndex(index);
         if (index == 0) {
             return head.value;
         } else if (index == size - 1) {
             return tail.value;
         } else {
-            Node findedNode = findNode(index);
+            Node<T> findedNode = findNode(index);
             return findedNode.value;
         }
     }
 
     @Override
-    public Object set(Object value, int index) {
+    public T set(T value, int index) {
         validateIndex(index);
-        Object oldValue;
+        T oldValue;
         if (index == 0) {
             oldValue = head.value;
             head.value = value;
@@ -82,7 +81,7 @@ public class LinkedList extends AbstractList {
             oldValue = tail.value;
             tail.value = value;
         } else {
-            Node findedNode = findNode(index);
+            Node<T> findedNode = findNode(index);
             oldValue = findedNode.value;
             findedNode.value = value;
         }
@@ -98,7 +97,7 @@ public class LinkedList extends AbstractList {
 
     @Override
     public int indexOf(Object value) {
-        Node currentNode = head;
+        Node<T> currentNode = head;
         for (int i = 0; i < size; i++) {
             if (Objects.equals(currentNode.value, value)) {
                 return i;
@@ -110,7 +109,7 @@ public class LinkedList extends AbstractList {
 
     @Override
     public int lastIndexOf(Object value) {
-        Node currentNode = tail;
+        Node<T> currentNode = tail;
         for (int i = size - 1; i >= 0; i--) {
             if (Objects.equals(currentNode.value, value)) {
                 return i;
@@ -120,7 +119,7 @@ public class LinkedList extends AbstractList {
         return -1;
     }
 
-    private Node findNode(int index) {
+    private Node<T> findNode(int index) {
         if (index <= size / 2) {
             return findStartingFromHead(index);
         } else {
@@ -128,16 +127,16 @@ public class LinkedList extends AbstractList {
         }
     }
 
-    private Node findStartingFromHead(int index) {
-        Node currentNode = head;
+    private Node<T> findStartingFromHead(int index) {
+        Node<T> currentNode = head;
         for (int i = 1; i <= index; i++) {
             currentNode = currentNode.next;
         }
         return currentNode;
     }
 
-    private Node findStartingFromTail(int index) {
-        Node currentNode = tail;
+    private Node<T> findStartingFromTail(int index) {
+        Node<T> currentNode = tail;
         for (int i = size - 1; i > index; i--) {
             currentNode = currentNode.prev;
         }
@@ -145,34 +144,51 @@ public class LinkedList extends AbstractList {
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<T> iterator() {
         return new LinkedListIterator();
     }
 
-    private class LinkedListIterator implements Iterator {
-        private int index = 0;
-        private Node currentNode = head;
+    private class LinkedListIterator implements Iterator<T> {
+
+        private Node<T> currentNode = head;
+        private Node<T> validNodeToRemove = null;
 
         @Override
         public boolean hasNext() {
-            return index < size;
+            return (validNodeToRemove = currentNode) != null;
         }
 
         @Override
-        public Object next() {
-            Object value = currentNode.value;
+        public T next() {
+            T value = currentNode.value;
             currentNode = currentNode.next;
-            index++;
             return value;
+        }
+
+        @Override
+        public void remove() {
+            if (Objects.equals(currentNode, validNodeToRemove)) {
+                if (size == 1) {
+                    head = null;
+                    tail = null;
+                } else if (Objects.equals(currentNode, head)) {
+                    head = head.next;
+                    head.prev = null;
+                }
+                currentNode = head;
+                size--;
+            } else {
+                throw new IllegalStateException("Invalid using of remove method");
+            }
         }
     }
 
-    private static class Node {
-        private Object value;
-        private Node next;
-        private Node prev;
+    private static class Node<T> {
+        private T value;
+        private Node<T> next;
+        private Node<T> prev;
 
-        public Node(Object value) {
+        public Node(T value) {
             this.value = value;
         }
     }

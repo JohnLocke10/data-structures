@@ -4,13 +4,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractListTest {
 
-    private List list;
+    private List<String> list;
 
-    abstract List getList();
+    abstract List<String> getList();
 
     @BeforeEach
     public void setUp() {
@@ -331,5 +333,59 @@ public abstract class AbstractListTest {
         list.add("A");
         String actualString = list.toString();
         assertEquals("[H,O,L,A]", actualString);
+    }
+
+    @Test
+    @DisplayName("check iterator remove all elements in non empty list")
+    public void checkIteratorRemoveAllElementsInNonEmptyList() {
+        list.add("J");
+        list.add("B");
+        list.add("L");
+        Iterator<String> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            iterator.remove();
+        }
+        assertEquals(0, list.size());
+        assertTrue(list.isEmpty());
+    }
+
+    @Test
+    @DisplayName("check iterator remove the only one element")
+    public void checkIteratorRemoveTheOnlyOneElement() {
+        list.add("I");
+        assertEquals(1, list.size());
+        Iterator<String> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            iterator.remove();
+        }
+        assertFalse(list.contains("I"));
+        assertTrue(list.isEmpty());
+    }
+
+    @Test
+    @DisplayName("check iterator remove throws exception when no hasNext called")
+    public void checkIteratorRemoveThrowsExceptionWhenNoHasNextCalled() {
+        list.add("R");
+        assertEquals(1, list.size());
+        Iterator<String> iterator = list.iterator();
+        IllegalStateException actualException = assertThrows(IllegalStateException.class, () -> {
+            iterator.remove();
+        });
+        assertEquals("Invalid using of remove method", actualException.getMessage());
+    }
+
+    @Test
+    @DisplayName("check iterator remove throws exception when call for the same element")
+    public void checkIteratorRemoveThrowsExceptionWhenCallForTheSameElement() {
+        list.add("S");
+        assertEquals(1, list.size());
+        Iterator<String> iterator = list.iterator();
+        IllegalStateException actualException = assertThrows(IllegalStateException.class, () -> {
+            while (iterator.hasNext()) {
+                iterator.remove();
+                iterator.remove();
+            }
+        });
+        assertEquals("Invalid using of remove method", actualException.getMessage());
     }
 }

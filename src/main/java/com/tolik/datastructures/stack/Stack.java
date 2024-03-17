@@ -1,13 +1,13 @@
 package com.tolik.datastructures.stack;
 
-public interface Stack extends Iterable {
-    public void push(Object value);
+public interface Stack<T> extends Iterable<T> {
+    public void push(T value);
 
-    public Object pop();
+    public T pop();
 
-    Object peek();
+    T peek();
 
-    boolean contains(Object value);
+    boolean contains(T value);
 
     public int size();
 

@@ -1,12 +1,18 @@
 package com.tolik.datastructures.queue;
 
-public interface Queue extends Iterable{
-    public void enqueue(Object value);
-    public Object dequeue();
-    Object peek();
+public interface Queue<T> extends Iterable<T> {
+    public void enqueue(T value);
+
+    public T dequeue();
+
+    T peek();
+
     public int size();
+
     boolean isEmpty();
-    boolean contains(Object value);
+
+    boolean contains(T value);
+
     void clear();
 
     //[A,B,C] if size = 3

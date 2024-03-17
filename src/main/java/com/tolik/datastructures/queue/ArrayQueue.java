@@ -2,9 +2,8 @@ package com.tolik.datastructures.queue;
 
 import java.util.Iterator;
 import java.util.Objects;
-import java.util.StringJoiner;
 
-public class ArrayQueue extends AbstractQueue {
+public class ArrayQueue<T> extends AbstractQueue<T> {
 
     private static final int DEFAULT_INITIAL_CAPACITY = 10;
     private int leftIndex = 0;
@@ -15,22 +14,22 @@ public class ArrayQueue extends AbstractQueue {
     }
 
     public ArrayQueue(int capacity) {
-        this.array = new Object[capacity];
+        this.array = (T[]) new Object[capacity];
     }
 
     @Override
-    public void enqueue(Object value) {
+    public void enqueue(T value) {
         ensureCapacityAndExtendArray();
         array[rightIndex++] = value;
         updateSize();
     }
 
     @Override
-    public Object dequeue() {
+    public T dequeue() {
         if (isEmpty()) {
             throw new IllegalStateException(QUEUE_IS_EMPTY);
         }
-        Object elementToReturn = array[leftIndex];
+        T elementToReturn = array[leftIndex];
         leftIndex++;
         updateSize();
 
@@ -38,7 +37,7 @@ public class ArrayQueue extends AbstractQueue {
     }
 
     @Override
-    public Object peek() {
+    public T peek() {
         if (isEmpty()) {
             throw new IllegalStateException(QUEUE_IS_EMPTY);
         }
@@ -46,8 +45,8 @@ public class ArrayQueue extends AbstractQueue {
     }
 
     @Override
-    public boolean contains(Object value) {
-        for (Object object : this) {
+    public boolean contains(T value) {
+        for (T object : this) {
             if (Objects.equals(object, value)) {
                 return true;
             }
@@ -72,7 +71,7 @@ public class ArrayQueue extends AbstractQueue {
     private void ensureCapacityAndExtendArray() {
         reorganiseElements();
         if (rightIndex == array.length) {
-            Object[] extendedArray = new Object[array.length * 2];
+            T[] extendedArray = (T[]) new Object[array.length * 2];
             System.arraycopy(array, leftIndex, extendedArray, 0, size);
             array = extendedArray;
             leftIndex = 0;
@@ -89,24 +88,34 @@ public class ArrayQueue extends AbstractQueue {
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<T> iterator() {
         return new ArrayQueueIterator();
     }
 
-    private class ArrayQueueIterator implements Iterator {
+    private class ArrayQueueIterator implements Iterator<T> {
         private int index = 0;
+        private int validIndexToRemove = -1;
 
         @Override
         public boolean hasNext() {
-            return index < size;
+            return (validIndexToRemove = index) < size;
         }
 
         @Override
-        public Object next() {
-            Object value = array[index++];
-            return value;
+        public T next() {
+            return array[index++];
+        }
+
+        @Override
+        public void remove() {
+            if (validIndexToRemove == index) {
+                System.arraycopy(array, index + 1, array, index, size - index);
+                size--;
+            } else {
+                throw new IllegalStateException("Invalid using of remove method");
+            }
+            validIndexToRemove = -1;
         }
     }
-
 }
 

@@ -2,10 +2,10 @@ package com.tolik.datastructures.queue;
 
 import java.util.StringJoiner;
 
-public abstract class AbstractQueue implements Queue {
+public abstract class AbstractQueue<T> implements Queue<T> {
     public static final String QUEUE_IS_EMPTY = "The Queue is empty!";
     int size = 0;
-    Object[] array;
+    T[] array;
 
     @Override
     public int size() {

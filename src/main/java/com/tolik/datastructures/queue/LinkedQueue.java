@@ -2,41 +2,39 @@ package com.tolik.datastructures.queue;
 
 import java.util.Iterator;
 import java.util.Objects;
-import java.util.StringJoiner;
 
-public class LinkedQueue extends AbstractQueue {
+public class LinkedQueue<T> extends AbstractQueue<T> {
 
-    private Node head;
+    private Node<T> head;
 
     @Override
-    public void enqueue(Object value) {
-        Node newNode = new Node(value);
+    public void enqueue(T value) {
+        Node<T> newNode = new Node<>(value);
         if (isEmpty()) {
             head = newNode;
         } else {
-            Node currentNode = head;
+            Node<T> currentNode = head;
             for (int i = 1; i < size; i++) {
                 currentNode = currentNode.next;
             }
             currentNode.next = newNode;
         }
         size++;
-
     }
 
     @Override
-    public Object dequeue() {
+    public T dequeue() {
         if (isEmpty()) {
             throw new IllegalStateException(QUEUE_IS_EMPTY);
         }
-        Object result = head.value;
+        T result = head.value;
         head = head.next;
         size--;
         return result;
     }
 
     @Override
-    public Object peek() {
+    public T peek() {
         if (isEmpty()) {
             throw new IllegalStateException(QUEUE_IS_EMPTY);
         }
@@ -44,10 +42,11 @@ public class LinkedQueue extends AbstractQueue {
     }
 
     @Override
-    public boolean contains(Object value) {
-        for (Object object : this) {
-            Objects.equals(object, value);
-            return true;
+    public boolean contains(T value) {
+        for (T object : this) {
+            if (Objects.equals(object, value)) {
+                return true;
+            }
         }
         return false;
     }
@@ -59,33 +58,43 @@ public class LinkedQueue extends AbstractQueue {
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<T> iterator() {
         return new LinkedQueueIterator();
     }
 
-    private class LinkedQueueIterator implements Iterator {
-        private int index = 0;
-        private Node currentNode = head;
+    private class LinkedQueueIterator implements Iterator<T> {
+        private Node<T> currentNode = head;
+        private Node<T> validNodeToRemove = null;
 
         @Override
         public boolean hasNext() {
-            return index < size;
+            return (validNodeToRemove = currentNode) != null;
         }
 
         @Override
-        public Object next() {
-            Object value = currentNode.value;
+        public void remove() {
+            if (Objects.equals(currentNode, validNodeToRemove)) {
+                head = currentNode.next;
+                currentNode = head;
+                size--;
+            } else {
+                throw new IllegalStateException("Invalid using of remove method");
+            }
+        }
+
+        @Override
+        public T next() {
+            T value = currentNode.value;
             currentNode = currentNode.next;
-            index++;
             return value;
         }
     }
 
-    private static class Node {
-        private Object value;
-        private Node next;
+    private static class Node<T> {
+        private T value;
+        private Node<T> next;
 
-        public Node(Object value) {
+        public Node(T value) {
             this.value = value;
         }
     }

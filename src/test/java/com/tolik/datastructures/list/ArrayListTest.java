@@ -7,17 +7,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ArrayListTest extends AbstractListTest {
 
-    private List list;
+    private List<String> list;
 
     @Override
-    List getList() {
-        return new ArrayList();
+    List<String> getList() {
+        return new ArrayList<>();
     }
 
     @Test
     @DisplayName("Check add over initial capacity")
     public void checkAddOverInitialCapacity() {
-        list = new ArrayList(1);
+        list = new ArrayList<>(1);
         list.add("X");
         list.add("Y");
         assertEquals(2, list.size());

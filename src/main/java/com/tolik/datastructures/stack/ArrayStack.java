@@ -4,34 +4,34 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class ArrayStack implements Stack {
+public class ArrayStack<T> implements Stack<T> {
     private int size;
-    private Object[] array;
+    private T[] array;
 
     public ArrayStack() {
-        this.array = new Object[10];
+        this.array = (T[]) new Object[10];
     }
 
     public ArrayStack(int initialCapacity) {
-        this.array = new Object[initialCapacity];
+        this.array = (T[]) new Object[initialCapacity];
     }
 
     @Override
-    public void push(Object value) {
+    public void push(T value) {
         ensureCapacity();
         array[size++] = value;
     }
 
     private void ensureCapacity() {
         if (array.length == size) {
-            Object[] extendedArray = new Object[array.length * 2];
+            T[] extendedArray = (T[]) new Object[array.length * 2];
             System.arraycopy(array, 0, extendedArray, 0, size);
             array = extendedArray;
         }
     }
 
     @Override
-    public Object pop() {
+    public T pop() {
         if (isEmpty()) {
             throw new IllegalStateException("The stack is empty!");
         }
@@ -39,7 +39,7 @@ public class ArrayStack implements Stack {
     }
 
     @Override
-    public Object peek() {
+    public T peek() {
         if (isEmpty()) {
             throw new IllegalStateException("The stack is empty!");
         }
@@ -47,8 +47,8 @@ public class ArrayStack implements Stack {
     }
 
     @Override
-    public boolean contains(Object value) {
-        for (Object object : this) {
+    public boolean contains(T value) {
+        for (T object : this) {
             if (Objects.equals(object, value)) {
                 return true;
             }
@@ -77,30 +77,41 @@ public class ArrayStack implements Stack {
     @Override
     public String toString() {
         StringJoiner stringJoiner = new StringJoiner(",", "[", "]");
-        for (Object object : this) {
+        for (T object : this) {
             stringJoiner.add(String.valueOf(object));
         }
         return stringJoiner.toString();
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<T> iterator() {
         return new StackIterator();
     }
 
-    private class StackIterator implements Iterator {
+    private class StackIterator implements Iterator<T> {
 
         private int index = 0;
+        private int validIndexToRemove = -1;
 
         @Override
         public boolean hasNext() {
-            return index < size;
+            return (validIndexToRemove = index) < size;
         }
 
         @Override
-        public Object next() {
-            Object value = array[index++];
-            return value;
+        public T next() {
+            return array[index++];
+        }
+
+        @Override
+        public void remove() {
+            if (validIndexToRemove == index) {
+                System.arraycopy(array, index + 1, array, index, size - index);
+                size--;
+            } else {
+                throw new IllegalStateException("Invalid using of remove method for index: " + index);
+            }
+            validIndexToRemove = -1;
         }
     }
 }

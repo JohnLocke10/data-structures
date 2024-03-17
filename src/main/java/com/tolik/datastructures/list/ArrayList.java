@@ -2,23 +2,22 @@ package com.tolik.datastructures.list;
 
 import java.util.Iterator;
 import java.util.Objects;
-import java.util.StringJoiner;
 
-public class ArrayList extends AbstractList {
+public class ArrayList<T> extends AbstractList<T> {
 
     private static final int DEFAULT_INITIAL_CAPACITY = 10;
-    private Object[] array;
+    private T[] array;
 
     public ArrayList() {
         this(DEFAULT_INITIAL_CAPACITY);
     }
 
     public ArrayList(int capacity) {
-        this.array = new Object[capacity];
+        this.array = (T[]) new Object[capacity];
     }
 
     @Override
-    public void add(Object value, int index) {
+    public void add(T value, int index) {
         validateIndexToAdd(index);
         ensureCapacityAndExtendArray();
         System.arraycopy(array, index, array, index + 1, size - index);
@@ -27,24 +26,24 @@ public class ArrayList extends AbstractList {
     }
 
     @Override
-    public Object remove(int index) {
+    public T remove(int index) {
         validateIndex(index);
-        Object removedValue = array[index];
+        T removedValue = array[index];
         System.arraycopy(array, index + 1, array, index, size - index - 1);
         size--;
         return removedValue;
     }
 
     @Override
-    public Object get(int index) {
+    public T get(int index) {
         validateIndex(index);
         return array[index];
     }
 
     @Override
-    public Object set(Object value, int index) {
+    public T set(T value, int index) {
         validateIndex(index);
-        Object oldValue = array[index];
+        T oldValue = array[index];
         array[index] = value;
         return oldValue;
     }
@@ -58,7 +57,7 @@ public class ArrayList extends AbstractList {
     }
 
     @Override
-    public int indexOf(Object value) {
+    public int indexOf(T value) {
         for (int i = 0; i < size; i++) {
             if (Objects.equals(array[i], value)) {
                 return i;
@@ -68,7 +67,7 @@ public class ArrayList extends AbstractList {
     }
 
     @Override
-    public int lastIndexOf(Object value) {
+    public int lastIndexOf(T value) {
         for (int i = size - 1; i >= 0; i--) {
             if (Objects.equals(array[i], value)) {
                 return i;
@@ -79,29 +78,40 @@ public class ArrayList extends AbstractList {
 
     private void ensureCapacityAndExtendArray() {
         if (size == array.length - 1) {
-            Object[] extendedArray = new Object[array.length * 2];
+            T[] extendedArray = (T[]) new Object[array.length * 2];
             System.arraycopy(array, 0, extendedArray, 0, size);
             array = extendedArray;
         }
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<T> iterator() {
         return new ArrayListIterator();
     }
 
-    private class ArrayListIterator implements Iterator {
+    private class ArrayListIterator implements Iterator<T> {
         private int index = 0;
+        private int validIndexToRemove = -1;
 
         @Override
         public boolean hasNext() {
-            return index < size;
+            return (validIndexToRemove = index) < size;
         }
 
         @Override
-        public Object next() {
-            Object value = array[index++];
-            return value;
+        public T next() {
+            return array[index++];
+        }
+
+        @Override
+        public void remove() {
+            if (validIndexToRemove == index) {
+                System.arraycopy(array, index + 1, array, index, size - index);
+                size--;
+            } else {
+                throw new IllegalStateException("Invalid using of remove method");
+            }
+            validIndexToRemove = -1;
         }
     }
 }

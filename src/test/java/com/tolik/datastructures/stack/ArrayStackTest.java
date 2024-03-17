@@ -4,15 +4,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ArrayStackTest {
 
-    private ArrayStack arrayStack;
+    private ArrayStack<String> arrayStack;
 
     @BeforeEach
     public void setUp() {
-        arrayStack = new ArrayStack();
+        arrayStack = new ArrayStack<>();
     }
 
     @Test
@@ -146,5 +148,58 @@ public class ArrayStackTest {
         assertEquals("[H,O,L,A]", actualString);
     }
 
+    @Test
+    @DisplayName("check iterator remove all elements in non empty stack")
+    public void checkIteratorRemoveAllElementsInNonEmptyStack() {
+        arrayStack.push("J");
+        arrayStack.push("B");
+        arrayStack.push("L");
+        Iterator<String> iterator = arrayStack.iterator();
+        while (iterator.hasNext()) {
+            iterator.remove();
+        }
+        assertEquals(0, arrayStack.size());
+        assertTrue(arrayStack.isEmpty());
+    }
+
+    @Test
+    @DisplayName("check iterator remove the only one element")
+    public void checkIteratorRemoveTheOnlyOneElement() {
+        arrayStack.push("I");
+        assertEquals(1, arrayStack.size());
+        Iterator<String> iterator = arrayStack.iterator();
+        while (iterator.hasNext()) {
+            iterator.remove();
+        }
+        assertFalse(arrayStack.contains("I"));
+        assertTrue(arrayStack.isEmpty());
+    }
+
+    @Test
+    @DisplayName("check iterator remove throws exception when no hasNext called")
+    public void checkIteratorRemoveThrowsExceptionWhenNoHasNextCalled() {
+        arrayStack.push("R");
+        assertEquals(1, arrayStack.size());
+        Iterator<String> iterator = arrayStack.iterator();
+        IllegalStateException actualException = assertThrows(IllegalStateException.class, () -> {
+            iterator.remove();
+        });
+        assertEquals("Invalid using of remove method for index: 0", actualException.getMessage());
+    }
+
+    @Test
+    @DisplayName("check iterator remove throws exception when call for the same element")
+    public void checkIteratorRemoveThrowsExceptionWhenCallForTheSameElement() {
+        arrayStack.push("S");
+        assertEquals(1, arrayStack.size());
+        Iterator<String> iterator = arrayStack.iterator();
+        IllegalStateException actualException = assertThrows(IllegalStateException.class, () -> {
+            while (iterator.hasNext()) {
+                iterator.remove();
+                iterator.remove();
+            }
+        });
+        assertEquals("Invalid using of remove method for index: 0", actualException.getMessage());
+    }
 
 }

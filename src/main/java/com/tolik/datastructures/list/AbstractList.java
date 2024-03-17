@@ -2,7 +2,7 @@ package com.tolik.datastructures.list;
 
 import java.util.StringJoiner;
 
-public abstract class AbstractList implements List {
+public abstract class AbstractList<T> implements List<T> {
 
     static final String INDEX_SHOULD_BE_POSITIVE_AND_LESS_THAN_LIST_SIZE =
             "Index should be in range from 0(inclusive) till list.size(exclusive)! List size: %d. Actual index: %d";
@@ -22,19 +22,19 @@ public abstract class AbstractList implements List {
     }
 
     @Override
-    public void add(Object value) {
+    public void add(T value) {
         add(value, size);
     }
 
     @Override
-    public boolean contains(Object value) {
+    public boolean contains(T value) {
         return indexOf(value) != -1;
     }
 
     @Override
     public String toString() {
         StringJoiner stringJoiner = new StringJoiner(",", "[", "]");
-        for (Object object : this) {
+        for (T object : this) {
             stringJoiner.add(String.valueOf(object));
         }
         return stringJoiner.toString();
