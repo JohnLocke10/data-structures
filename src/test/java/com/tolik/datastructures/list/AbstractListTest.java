@@ -343,10 +343,62 @@ public abstract class AbstractListTest {
         list.add("L");
         Iterator<String> iterator = list.iterator();
         while (iterator.hasNext()) {
+            iterator.next();
             iterator.remove();
         }
         assertEquals(0, list.size());
         assertTrue(list.isEmpty());
+    }
+
+    @Test
+    @DisplayName("check iterator remove one elements in non empty list")
+    public void checkIteratorRemoveOneElementsInNonEmptyList() {
+        list.add("N");
+        Iterator<String> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            iterator.next();
+            iterator.remove();
+        }
+        assertEquals(0, list.size());
+        assertTrue(list.isEmpty());
+    }
+
+    @Test
+    @DisplayName("check get from tail when remove all by iterator and then add")
+    public void checkGetFromTailWhenRemoveAllByIteratorAntThenAdd() {
+        list.add("P");
+        list.add("W");
+        Iterator<String> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            iterator.next();
+            iterator.remove();
+        }
+        list.add("K");
+        list.add("L");
+        list.add("M");
+        assertEquals("M", list.get(2));
+        assertEquals("L", list.get(1));
+        assertEquals("K", list.get(0));
+        assertEquals(3, list.size());
+    }
+
+    @Test
+    @DisplayName("check get from head when remove all by iterator and then add")
+    public void checkGetFromHeadWhenRemoveAllByIteratorAntThenAdd() {
+        list.add("V");
+        list.add("C");
+        Iterator<String> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            iterator.next();
+            iterator.remove();
+        }
+        list.add("R");
+        list.add("T");
+        list.add("Y");
+        assertEquals("R", list.get(0));
+        assertEquals("T", list.get(1));
+        assertEquals("Y", list.get(2));
+        assertEquals(3, list.size());
     }
 
     @Test
@@ -356,6 +408,7 @@ public abstract class AbstractListTest {
         assertEquals(1, list.size());
         Iterator<String> iterator = list.iterator();
         while (iterator.hasNext()) {
+            iterator.next();
             iterator.remove();
         }
         assertFalse(list.contains("I"));
@@ -363,8 +416,8 @@ public abstract class AbstractListTest {
     }
 
     @Test
-    @DisplayName("check iterator remove throws exception when no hasNext called")
-    public void checkIteratorRemoveThrowsExceptionWhenNoHasNextCalled() {
+    @DisplayName("check iterator remove throws exception when no next method called")
+    public void checkIteratorRemoveThrowsExceptionWhenNoNextMethodCalled() {
         list.add("R");
         assertEquals(1, list.size());
         Iterator<String> iterator = list.iterator();
@@ -382,6 +435,7 @@ public abstract class AbstractListTest {
         Iterator<String> iterator = list.iterator();
         IllegalStateException actualException = assertThrows(IllegalStateException.class, () -> {
             while (iterator.hasNext()) {
+                iterator.next();
                 iterator.remove();
                 iterator.remove();
             }

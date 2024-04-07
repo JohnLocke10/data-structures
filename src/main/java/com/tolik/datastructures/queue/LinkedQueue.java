@@ -73,13 +73,12 @@ public class LinkedQueue<T> extends AbstractQueue<T> {
 
         @Override
         public void remove() {
-            if (Objects.equals(currentNode, validNodeToRemove)) {
-                head = currentNode.next;
-                currentNode = head;
-                size--;
-            } else {
+            if (!Objects.equals(currentNode, validNodeToRemove)) {
                 throw new IllegalStateException("Invalid using of remove method");
             }
+            head = currentNode.next;
+            currentNode = head;
+            size--;
         }
 
         @Override

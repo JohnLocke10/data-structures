@@ -12,6 +12,7 @@ public class ArrayList<T> extends AbstractList<T> {
         this(DEFAULT_INITIAL_CAPACITY);
     }
 
+    @SuppressWarnings("unchecked")
     public ArrayList(int capacity) {
         this.array = (T[]) new Object[capacity];
     }
@@ -78,6 +79,7 @@ public class ArrayList<T> extends AbstractList<T> {
 
     private void ensureCapacityAndExtendArray() {
         if (size == array.length - 1) {
+            @SuppressWarnings("unchecked")
             T[] extendedArray = (T[]) new Object[array.length * 2];
             System.arraycopy(array, 0, extendedArray, 0, size);
             array = extendedArray;
@@ -91,27 +93,28 @@ public class ArrayList<T> extends AbstractList<T> {
 
     private class ArrayListIterator implements Iterator<T> {
         private int index = 0;
-        private int validIndexToRemove = -1;
+        boolean canBeRemoved;
 
         @Override
         public boolean hasNext() {
-            return (validIndexToRemove = index) < size;
+            return index < size;
         }
 
         @Override
         public T next() {
+            canBeRemoved = true;
             return array[index++];
         }
 
         @Override
         public void remove() {
-            if (validIndexToRemove == index) {
-                System.arraycopy(array, index + 1, array, index, size - index);
-                size--;
-            } else {
+            if (!canBeRemoved) {
                 throw new IllegalStateException("Invalid using of remove method");
             }
-            validIndexToRemove = -1;
+            System.arraycopy(array, index, array, index - 1, size - 1);
+            size--;
+            index = index - 1;
+            canBeRemoved = false;
         }
     }
 }

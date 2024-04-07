@@ -13,6 +13,7 @@ public class ArrayQueue<T> extends AbstractQueue<T> {
         this(DEFAULT_INITIAL_CAPACITY);
     }
 
+    @SuppressWarnings("unchecked")
     public ArrayQueue(int capacity) {
         this.array = (T[]) new Object[capacity];
     }
@@ -71,6 +72,7 @@ public class ArrayQueue<T> extends AbstractQueue<T> {
     private void ensureCapacityAndExtendArray() {
         reorganiseElements();
         if (rightIndex == array.length) {
+            @SuppressWarnings("unchecked")
             T[] extendedArray = (T[]) new Object[array.length * 2];
             System.arraycopy(array, leftIndex, extendedArray, 0, size);
             array = extendedArray;
@@ -108,12 +110,11 @@ public class ArrayQueue<T> extends AbstractQueue<T> {
 
         @Override
         public void remove() {
-            if (validIndexToRemove == index) {
-                System.arraycopy(array, index + 1, array, index, size - index);
-                size--;
-            } else {
+            if (validIndexToRemove != index) {
                 throw new IllegalStateException("Invalid using of remove method");
             }
+            System.arraycopy(array, index + 1, array, index, size - index);
+            size--;
             validIndexToRemove = -1;
         }
     }

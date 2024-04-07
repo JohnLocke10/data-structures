@@ -34,24 +34,27 @@ public class LinkedList<T> extends AbstractList<T> {
     @Override
     public T remove(int index) {
         validateIndex(index);
+        return remove(findNode(index));
+    }
+
+    public T remove(Node<T> node) {
         T deletedValue;
         if (size == 1) {
             deletedValue = head.value;
             head = null;
             tail = null;
-        } else if (index == 0) {
+        } else if (node == head) {
             deletedValue = head.value;
             head = head.next;
             head.prev = null;
-        } else if (index == size - 1) {
+        } else if (node == tail) {
             deletedValue = tail.value;
             tail = tail.prev;
             tail.next = null;
         } else {
-            Node<T> findedNode = findNode(index);
-            deletedValue = findedNode.value;
-            findedNode.next.prev = findedNode.prev;
-            findedNode.prev.next = findedNode.next;
+            deletedValue = node.value;
+            node.next.prev = node.prev;
+            node.prev.next = node.next;
         }
         size--;
         return deletedValue;
@@ -60,14 +63,8 @@ public class LinkedList<T> extends AbstractList<T> {
     @Override
     public T get(int index) {
         validateIndex(index);
-        if (index == 0) {
-            return head.value;
-        } else if (index == size - 1) {
-            return tail.value;
-        } else {
-            Node<T> findedNode = findNode(index);
-            return findedNode.value;
-        }
+        Node<T> findedNode = findNode(index);
+        return findedNode.value;
     }
 
     @Override
@@ -121,26 +118,18 @@ public class LinkedList<T> extends AbstractList<T> {
 
     private Node<T> findNode(int index) {
         if (index <= size / 2) {
-            return findStartingFromHead(index);
+            Node<T> currentNode = head;
+            for (int i = 1; i <= index; i++) {
+                currentNode = currentNode.next;
+            }
+            return currentNode;
         } else {
-            return findStartingFromTail(index);
+            Node<T> currentNode = tail;
+            for (int i = size - 1; i > index; i--) {
+                currentNode = currentNode.prev;
+            }
+            return currentNode;
         }
-    }
-
-    private Node<T> findStartingFromHead(int index) {
-        Node<T> currentNode = head;
-        for (int i = 1; i <= index; i++) {
-            currentNode = currentNode.next;
-        }
-        return currentNode;
-    }
-
-    private Node<T> findStartingFromTail(int index) {
-        Node<T> currentNode = tail;
-        for (int i = size - 1; i > index; i--) {
-            currentNode = currentNode.prev;
-        }
-        return currentNode;
     }
 
     @Override
@@ -151,35 +140,28 @@ public class LinkedList<T> extends AbstractList<T> {
     private class LinkedListIterator implements Iterator<T> {
 
         private Node<T> currentNode = head;
-        private Node<T> validNodeToRemove = null;
+        boolean canBeRemoved;
 
         @Override
         public boolean hasNext() {
-            return (validNodeToRemove = currentNode) != null;
+            return currentNode != null;
         }
 
         @Override
         public T next() {
             T value = currentNode.value;
             currentNode = currentNode.next;
+            canBeRemoved = true;
             return value;
         }
 
         @Override
         public void remove() {
-            if (Objects.equals(currentNode, validNodeToRemove)) {
-                if (size == 1) {
-                    head = null;
-                    tail = null;
-                } else if (Objects.equals(currentNode, head)) {
-                    head = head.next;
-                    head.prev = null;
-                }
-                currentNode = head;
-                size--;
-            } else {
+            if (!canBeRemoved) {
                 throw new IllegalStateException("Invalid using of remove method");
             }
+            LinkedList.this.remove(size == 1 ? head : currentNode.prev);
+            canBeRemoved = false;
         }
     }
 

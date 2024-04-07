@@ -8,10 +8,12 @@ public class ArrayStack<T> implements Stack<T> {
     private int size;
     private T[] array;
 
+    @SuppressWarnings("unchecked")
     public ArrayStack() {
         this.array = (T[]) new Object[10];
     }
 
+    @SuppressWarnings("unchecked")
     public ArrayStack(int initialCapacity) {
         this.array = (T[]) new Object[initialCapacity];
     }
@@ -24,6 +26,7 @@ public class ArrayStack<T> implements Stack<T> {
 
     private void ensureCapacity() {
         if (array.length == size) {
+            @SuppressWarnings("unchecked")
             T[] extendedArray = (T[]) new Object[array.length * 2];
             System.arraycopy(array, 0, extendedArray, 0, size);
             array = extendedArray;
@@ -105,12 +108,11 @@ public class ArrayStack<T> implements Stack<T> {
 
         @Override
         public void remove() {
-            if (validIndexToRemove == index) {
-                System.arraycopy(array, index + 1, array, index, size - index);
-                size--;
-            } else {
+            if (validIndexToRemove != index) {
                 throw new IllegalStateException("Invalid using of remove method for index: " + index);
             }
+            System.arraycopy(array, index + 1, array, index, size - index);
+            size--;
             validIndexToRemove = -1;
         }
     }
