@@ -111,7 +111,7 @@ public class ArrayList<T> extends AbstractList<T> {
             if (!canBeRemoved) {
                 throw new IllegalStateException("Invalid using of remove method");
             }
-            System.arraycopy(array, index, array, index - 1, size - 1);
+            System.arraycopy(array, index, array, index - 1, size - index);
             size--;
             index = index - 1;
             canBeRemoved = false;

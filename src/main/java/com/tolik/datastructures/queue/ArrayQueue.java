@@ -96,26 +96,28 @@ public class ArrayQueue<T> extends AbstractQueue<T> {
 
     private class ArrayQueueIterator implements Iterator<T> {
         private int index = 0;
-        private int validIndexToRemove = -1;
+        private boolean canBeRemoved;
 
         @Override
         public boolean hasNext() {
-            return (validIndexToRemove = index) < size;
+            return index < size;
         }
 
         @Override
         public T next() {
+            canBeRemoved = true;
             return array[index++];
         }
 
         @Override
         public void remove() {
-            if (validIndexToRemove != index) {
+            if (!canBeRemoved) {
                 throw new IllegalStateException("Invalid using of remove method");
             }
-            System.arraycopy(array, index + 1, array, index, size - index);
+            System.arraycopy(array, index, array, index - 1, size - index);
             size--;
-            validIndexToRemove = -1;
+            index = index - 1;
+            canBeRemoved = false;
         }
     }
 }

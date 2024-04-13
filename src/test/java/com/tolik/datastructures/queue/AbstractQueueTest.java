@@ -153,6 +153,7 @@ public abstract class AbstractQueueTest {
         queue.enqueue("L");
         Iterator<String> iterator = queue.iterator();
         while (iterator.hasNext()) {
+            iterator.next();
             iterator.remove();
         }
         assertEquals(0, queue.size());
@@ -166,6 +167,7 @@ public abstract class AbstractQueueTest {
         assertEquals(1, queue.size());
         Iterator<String> iterator = queue.iterator();
         while (iterator.hasNext()) {
+            iterator.next();
             iterator.remove();
         }
         assertFalse(queue.contains("I"));
@@ -173,8 +175,8 @@ public abstract class AbstractQueueTest {
     }
 
     @Test
-    @DisplayName("check iterator remove throws exception when no hasNext called")
-    public void checkIteratorRemoveThrowsExceptionWhenNoHasNextCalled() {
+    @DisplayName("check iterator remove throws exception when no next method called")
+    public void checkIteratorRemoveThrowsExceptionWhenNoNextMethodCalled() {
         queue.enqueue("R");
         assertEquals(1, queue.size());
         Iterator<String> iterator = queue.iterator();
@@ -192,6 +194,7 @@ public abstract class AbstractQueueTest {
         Iterator<String> iterator = queue.iterator();
         IllegalStateException actualException = assertThrows(IllegalStateException.class, () -> {
             while (iterator.hasNext()) {
+                iterator.next();
                 iterator.remove();
                 iterator.remove();
             }

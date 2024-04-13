@@ -156,6 +156,7 @@ public class ArrayStackTest {
         arrayStack.push("L");
         Iterator<String> iterator = arrayStack.iterator();
         while (iterator.hasNext()) {
+            iterator.next();
             iterator.remove();
         }
         assertEquals(0, arrayStack.size());
@@ -169,6 +170,7 @@ public class ArrayStackTest {
         assertEquals(1, arrayStack.size());
         Iterator<String> iterator = arrayStack.iterator();
         while (iterator.hasNext()) {
+            iterator.next();
             iterator.remove();
         }
         assertFalse(arrayStack.contains("I"));

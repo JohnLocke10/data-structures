@@ -64,33 +64,36 @@ public class LinkedQueue<T> extends AbstractQueue<T> {
 
     private class LinkedQueueIterator implements Iterator<T> {
         private Node<T> currentNode = head;
-        private Node<T> validNodeToRemove = null;
+        private boolean canBeRemoved;
 
         @Override
         public boolean hasNext() {
-            return (validNodeToRemove = currentNode) != null;
-        }
-
-        @Override
-        public void remove() {
-            if (!Objects.equals(currentNode, validNodeToRemove)) {
-                throw new IllegalStateException("Invalid using of remove method");
-            }
-            head = currentNode.next;
-            currentNode = head;
-            size--;
+            return currentNode != null;
         }
 
         @Override
         public T next() {
             T value = currentNode.value;
             currentNode = currentNode.next;
+            canBeRemoved = true;
             return value;
         }
+
+        @Override
+        public void remove() {
+            if (!canBeRemoved) {
+                throw new IllegalStateException("Invalid using of remove method");
+            }
+            head = (size == 1 ? null : currentNode);
+            currentNode = head;
+            size--;
+            canBeRemoved = false;
+        }
+
     }
 
     private static class Node<T> {
-        private T value;
+        private final T value;
         private Node<T> next;
 
         public Node(T value) {
